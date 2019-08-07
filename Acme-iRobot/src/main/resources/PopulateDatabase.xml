@@ -1,0 +1,779 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- * PopulateDatabase.xml * * Copyright (C) 2019 Universidad de Sevilla 
+	* * The use of this project is hereby constrained to the conditions of the 
+	* TDG Licence, a copy of which you may download from http://www.tdg-seville.info/License.html -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- USER ACCOUNTS -->
+
+	<!-- ADMINISTRATORS -->
+
+	<bean id="userAdmin1" class="security.UserAccount">
+		<property name="username" value="admin" />
+		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="ADMIN" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="userAdmin2" class="security.UserAccount">
+		<property name="username" value="admin2" />
+		<property name="password" value="c84258e9c39059a89ab77d846ddab909" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="ADMIN" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<!-- CUSTOMERS -->
+
+	<bean id="userCustomer1" class="security.UserAccount">
+		<property name="username" value="customer1" />
+		<property name="password" value="ffbc4675f864e0e9aab8bdf7a0437010" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="CUSTOMER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="userCustomer2" class="security.UserAccount">
+		<property name="username" value="customer2" />
+		<property name="password" value="5ce4d191fd14ac85a1469fb8c29b7a7b" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="CUSTOMER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="userCustomer3" class="security.UserAccount">
+		<property name="username" value="customer3" />
+		<property name="password" value="033f7f6121501ae98285ad77f216d5e7" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="CUSTOMER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<!-- SCIENTISTS -->
+
+	<bean id="userScientist1" class="security.UserAccount">
+		<property name="username" value="scientist1" />
+		<property name="password" value="b5457bcf658ca5584b7062323a687b72" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="SCIENTIST" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="userScientist2" class="security.UserAccount">
+		<property name="username" value="scientist2" />
+		<property name="password" value="1d2d2747d200c65c1e9fee0642b35eeb" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="SCIENTIST" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="userScientist3" class="security.UserAccount">
+		<property name="username" value="scientist3" />
+		<property name="password" value="c58d2323c3cfc2b9398c1cfad4cc0eb8" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="SCIENTIST" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="userScientist4" class="security.UserAccount">
+		<property name="username" value="scientist4" />
+		<property name="password" value="3eb89ca96dfd3901b02dc08096896ef9" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="SCIENTIST" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<!-- ACTORS -->
+
+	<!-- ADMINISTATOR -->
+
+	<bean id="administrator1" class="domain.Administrator">
+		<property name="name" value="Boros" />
+		<property name="surname" value="Dominator of the Universe" />
+		<property name="photo"
+			value="https://vignette.wikia.nocookie.net/onepunchman/images/c/ce/Boros_color.jpg/revision/latest?cb=20151017212925" />
+		<property name="email" value="boros@yahoo.com" />
+		<property name="phoneNumber" value="+34666666666" />
+		<property name="address" value="C/ Collapsing Star Roaring Cannon" />
+		<property name="userAccount" ref="userAdmin1" />
+	</bean>
+
+	<bean id="administrator2" class="domain.Administrator">
+		<property name="name" value="Mozgus" />
+		<property name="surname" value="The Great Angel" />
+		<property name="photo"
+			value="https://vignette.wikia.nocookie.net/berserk/images/0/05/Mozgus_Manga.jpg/revision/latest/scale-to-width-down/250?cb=20140416220234" />
+		<property name="email" value="mozgus@gmail.com" />
+		<property name="phoneNumber" value="+34698652413" />
+		<property name="address" value="C/ Holy See" />
+		<property name="userAccount" ref="userAdmin2" />
+	</bean>
+
+	<!-- CUSTOMERS -->
+
+	<bean id="customer1" class="domain.Customer">
+		<property name="name" value="Frieza" />
+		<property name="surname" value="Agent of Destruction" />
+		<property name="photo"
+			value="https://vignette.wikia.nocookie.net/dragonball/images/8/83/Frieza_DBZ_Ep_85_002v2.png/revision/latest/scale-to-width-down/278?cb=20170920193805" />
+		<property name="email" value="frieza@hotmail.com" />
+		<property name="phoneNumber" value="+34615243875" />
+		<property name="address" value="C/ Planet Namek" />
+		<property name="userAccount" ref="userCustomer1" />
+		<property name="creditCard" ref="creditCard1" />
+		<property name="VATNumber" value="EST4681453R" />
+	</bean>
+
+	<bean id="customer2" class="domain.Customer">
+		<property name="name" value="Dio" />
+		<property name="surname" value="Brando" />
+		<property name="photo"
+			value="https://vignette.wikia.nocookie.net/jjba/images/1/18/Dio3Anime.png/revision/latest/scale-to-width-down/270?cb=20170301013659" />
+		<property name="email" value="dio@outlook.com" />
+		<property name="phoneNumber" value="+34685742458" />
+		<property name="address" value="C/ Phantom Blood" />
+		<property name="userAccount" ref="userCustomer2" />
+		<property name="creditCard" ref="creditCard2" />
+		<property name="VATNumber" value="ESO7618346E" />
+	</bean>
+	
+	<bean id="customer3" class="domain.Customer">
+		<property name="name" value="Calliu" />
+		<property name="surname" value="Pictures" />
+		<property name="photo" value="http://2.bp.blogspot.com/-GMbk63S19wI/Ul-rdWP_YUI/AAAAAAAAW-o/byjGxrZ2GWc/s1600/caillou-xl-pictures-12.jpg" />
+		<property name="email" value="calliu@outlook.com" />
+		<property name="phoneNumber" value="+34688721658" />
+		<property name="address" value="C/ Phantom Blood" />
+		<property name="userAccount" ref="userCustomer3" />
+		<property name="creditCard" ref="creditCard20" />
+		<property name="VATNumber" value="ESY6187325E" />
+	</bean>
+
+	<!-- SCIENTIST -->
+
+	<bean id="scientist1" class="domain.Scientist">
+		<property name="name" value="King Bradley" />
+		<property name="surname" value="Wrath" />
+		<property name="photo"
+			value="https://vignette.wikia.nocookie.net/fma/images/0/0b/KingBradley1080p.png/revision/latest/scale-to-width-down/310?cb=20161230194652" />
+		<property name="email" value="bradley@mail.com" />
+		<property name="phoneNumber" value="+34697854321" />
+		<property name="address" value="C/ Amestris" />
+		<property name="userAccount" ref="userScientist1" />
+		<property name="creditCard" ref="creditCard3" />
+		<property name="VATNumber" value="ES63397542L" />
+	</bean>
+
+	<bean id="scientist2" class="domain.Scientist">
+		<property name="name" value="Meruem" />
+		<property name="surname" value="Chimera Ants' King" />
+		<property name="photo"
+			value="https://vignette.wikia.nocookie.net/hunterxhunter/images/7/71/91_-_Meruem%27s_cruel_nature.png/revision/latest/scale-to-width-down/250?cb=20131008123029" />
+		<property name="email" value="meruem@yahoo.com" />
+		<property name="phoneNumber" value="+34658974582" />
+		<property name="address" value="C/ Chimera ants' nest" />
+		<property name="userAccount" ref="userScientist2" />
+		<property name="creditCard" ref="creditCard4" />
+		<property name="VATNumber" value="ES88462193P" />
+	</bean>
+
+	<bean id="scientist3" class="domain.Scientist">
+		<property name="name" value="Cartoon" />
+		<property name="surname" value="Man" />
+		<property name="photo" value="http://cliparts.co/cliparts/Aib/jRa/AibjRa9zT.jpg" />
+		<property name="email" value="cartoon@yahoo.com" />
+		<property name="phoneNumber" value="+34T627946333" />
+		<property name="address" value="C/ Cliparts, 99" />
+		<property name="userAccount" ref="userScientist3" />
+		<property name="creditCard" ref="creditCard5" />
+		<property name="VATNumber" value="ES43618753S" />
+	</bean>
+
+	<bean id="scientist4" class="domain.Scientist">
+		<property name="name" value="Barbudo" />
+		<property name="surname" value="Sandalias" />
+		<property name="photo" value="http://www.aperfectworld.org/clipart/cartoons/tourist.png" />
+		<property name="email" value="bsandalias@yahoo.com" />
+		<property name="phoneNumber" value="+34697421153" />
+		<property name="address" value="C/ La playa, 0" />
+		<property name="userAccount" ref="userScientist4" />
+		<property name="creditCard" ref="creditCard6" />
+		<property name="VATNumber" value="ES67463184A" />
+	</bean>
+
+	<!-- FINDERS -->
+
+	<bean id="finderCustomer1" class="domain.Finder">
+		<property name="results">
+			<list>
+			</list>
+		</property>
+		<property name="customer" ref="customer1" />
+	</bean>
+
+	<bean id="finderCustomer2" class="domain.Finder">
+		<property name="results">
+			<list>
+			</list>
+		</property>
+		<property name="customer" ref="customer2" />
+	</bean>
+	
+	<bean id="finderCustomer3" class="domain.Finder">
+		<property name="results">
+			<list>
+			</list>
+		</property>
+		<property name="customer" ref="customer3" />
+	</bean>
+
+	<!-- IROBOTS -->
+
+	<bean id="iRobot1" class="domain.IRobot">
+		<property name="title" value="Primer iRobot jamás creado" />
+		<property name="ticker" value="WRAT-1286" />
+		<property name="description" value="El primero y más mejor hasta la fecha" />
+		<property name="price" value="24.95" />
+		<property name="isDecomissioned" value="false" />
+		<property name="isDeleted" value="false" />
+		<property name="scientist" ref="scientist1" />
+	</bean>
+
+	<bean id="iRobot2" class="domain.IRobot">
+		<property name="title" value="iRobot Mega" />
+		<property name="ticker" value="WRAT-6487" />
+		<property name="description" value="Nuevo iRobot peor que el primero pero más barato" />
+		<property name="price" value="19.95" />
+		<property name="isDecomissioned" value="false" />
+		<property name="isDeleted" value="false" />
+		<property name="scientist" ref="scientist1" />
+	</bean>
+
+	<bean id="iRobot3" class="domain.IRobot">
+		<property name="title" value="iRobot Super Mega" />
+		<property name="ticker" value="WRAT-6634" />
+		<property name="description" value="Evolución del iRobot Mega" />
+		<property name="price" value="22.50" />
+		<property name="isDecomissioned" value="true" />
+		<property name="isDeleted" value="false" />
+		<property name="scientist" ref="scientist1" />
+	</bean>
+
+	<bean id="iRobot4" class="domain.IRobot">
+		<property name="title" value="iRobot 24q" />
+		<property name="ticker" value="CHIM-4543" />
+		<property name="description" value="Primer iRobot de oro macizo" />
+		<property name="price" value="2500.05" />
+		<property name="isDecomissioned" value="false" />
+		<property name="isDeleted" value="false" />
+		<property name="scientist" ref="scientist2" />
+	</bean>
+
+	<bean id="iRobot5" class="domain.IRobot">
+		<property name="title" value="iRobot Glass" />
+		<property name="ticker" value="CHIM-2679" />
+		<property name="description" value="Primer iRobot con chasis de cristal" />
+		<property name="price" value="529.99" />
+		<property name="isDecomissioned" value="false" />
+		<property name="isDeleted" value="false" />
+		<property name="scientist" ref="scientist2" />
+	</bean>
+
+	<bean id="iRobot6" class="domain.IRobot">
+		<property name="title" value="iRobot Clay" />
+		<property name="ticker" value="CHIM-3416" />
+		<property name="description" value="Primer iRobot con chasis de plastilina" />
+		<property name="price" value="999.99" />
+		<property name="isDecomissioned" value="true" />
+		<property name="isDeleted" value="false" />
+		<property name="scientist" ref="scientist2" />
+	</bean>
+
+	<bean id="iRobot7" class="domain.IRobot">
+		<property name="title" value="Matinger-T" />
+		<property name="ticker" value="WRAT-2871" />
+		<property name="description" value="Matinger-T es una marca registrada" />
+		<property name="price" value="75.50" />
+		<property name="isDecomissioned" value="false" />
+		<property name="isDeleted" value="false" />
+		<property name="scientist" ref="scientist1" />
+	</bean>
+	
+	<bean id="iRobot8" class="domain.IRobot">
+		<property name="title" value="C4PP" />
+		<property name="ticker" value="WRAT-9734" />
+		<property name="description" value="C4PP es una marca registrada" />
+		<property name="price" value="150.25" />
+		<property name="isDecomissioned" value="false" />
+		<property name="isDeleted" value="false" />
+		<property name="scientist" ref="scientist1" />
+	</bean>
+	
+	<bean id="iRobot9" class="domain.IRobot">
+		<property name="title" value="R6D1" />
+		<property name="ticker" value="WRAT-3467" />
+		<property name="description" value="R6D1 es una marca registrada" />
+		<property name="price" value="199.99" />
+		<property name="isDecomissioned" value="false" />
+		<property name="isDeleted" value="false" />
+		<property name="scientist" ref="scientist1" />
+	</bean>
+	
+	<bean id="iRobot10" class="domain.IRobot">
+		<property name="title" value="Eliminado" />
+		<property name="ticker" value="WRAT-2341" />
+		<property name="description" value="Eliminado es una marca registrada" />
+		<property name="price" value="66.66" />
+		<property name="isDecomissioned" value="true" />
+		<property name="isDeleted" value="true" />
+		<property name="scientist" ref="scientist1" />
+	</bean>
+	
+	<bean id="iRobot11" class="domain.IRobot">
+		<property name="title" value="Test Ticker" />
+		<property name="ticker" value="MANX-2341" />
+		<property name="description" value="Scientist con apellido de 3 letras" />
+		<property name="price" value="11.11" />
+		<property name="isDecomissioned" value="true" />
+		<property name="isDeleted" value="false" />
+		<property name="scientist" ref="scientist3" />
+	</bean>
+
+	<!-- ***** CREDITCARD ***** -->
+
+	<bean id="creditCard1" class="domain.CreditCard">
+		<property name="holder" value="Frieza" />
+		<property name="make" value="VISA" />
+		<property name="number" value="4764042457713154" />
+		<property name="expirationMonth" value="02" />
+		<property name="expirationYear" value="22" />
+		<property name="CVV" value="177" />
+	</bean>
+
+	<bean id="creditCard2" class="domain.CreditCard">
+		<property name="holder" value="Dio Brando" />
+		<property name="make" value="MASTERCARD" />
+		<property name="number" value="4544963188930071" />
+		<property name="expirationMonth" value="11" />
+		<property name="expirationYear" value="20" />
+		<property name="CVV" value="366" />
+	</bean>
+
+	<bean id="creditCard3" class="domain.CreditCard">
+		<property name="holder" value="King Bradley" />
+		<property name="make" value="VISA" />
+		<property name="number" value="4582276213483252" />
+		<property name="expirationMonth" value="01" />
+		<property name="expirationYear" value="28" />
+		<property name="CVV" value="707" />
+	</bean>
+
+	<bean id="creditCard4" class="domain.CreditCard">
+		<property name="holder" value="Meruem" />
+		<property name="make" value="AMERICAN EXPRESS" />
+		<property name="number" value="4354197982162289" />
+		<property name="expirationMonth" value="02" />
+		<property name="expirationYear" value="28" />
+		<property name="CVV" value="479" />
+	</bean>
+	
+	<bean id="creditCard5" class="domain.CreditCard">
+		<property name="holder" value="Cartoon Man" />
+		<property name="make" value="VISA" />
+		<property name="number" value="4285589630343424" />
+		<property name="expirationMonth" value="10" />
+		<property name="expirationYear" value="19" />
+		<property name="CVV" value="123" />
+	</bean>
+
+	<bean id="creditCard6" class="domain.CreditCard">
+		<property name="holder" value="Barbudo Sandalias" />
+		<property name="make" value="MASTERCARD" />
+		<property name="number" value="4248139401623715" />
+		<property name="expirationMonth" value="08" />
+		<property name="expirationYear" value="24" />
+		<property name="CVV" value="999" />
+	</bean>
+
+	<bean id="creditCard7" class="domain.CreditCard">
+		<property name="holder" value="Paula Montero Galán" />
+		<property name="make" value="VISA" />
+		<property name="number" value="4017359522310013" />
+		<property name="expirationMonth" value="09" />
+		<property name="expirationYear" value="25" />
+		<property name="CVV" value="525" />
+	</bean>
+
+	<bean id="creditCard8" class="domain.CreditCard">
+		<property name="holder" value="Gustavos S.A." />
+		<property name="make" value="AMERICAN EXPRESS" />
+		<property name="number" value="4786794545649162" />
+		<property name="expirationMonth" value="07" />
+		<property name="expirationYear" value="27" />
+		<property name="CVV" value="458" />
+	</bean>
+
+	<bean id="creditCard9" class="domain.CreditCard">
+		<property name="holder" value="Google" />
+		<property name="make" value="VISA" />
+		<property name="number" value="4288676013366200" />
+		<property name="expirationMonth" value="09" />
+		<property name="expirationYear" value="25" />
+		<property name="CVV" value="140" />
+	</bean>
+
+	<bean id="creditCard10" class="domain.CreditCard">
+		<property name="holder" value="Pato Donald" />
+		<property name="make" value="MASTERCARD" />
+		<property name="number" value="4735502658425730" />
+		<property name="expirationMonth" value="03" />
+		<property name="expirationYear" value="20" />
+		<property name="CVV" value="808" />
+	</bean>
+	
+	<bean id="creditCard11" class="domain.CreditCard">
+		<property name="holder" value="Sydnee Adams" />
+		<property name="make" value="VISA" />
+		<property name="number" value="4798111595272462" />
+		<property name="expirationMonth" value="07" />
+		<property name="expirationYear" value="26" />
+		<property name="CVV" value="640" />
+	</bean>
+	
+	<bean id="creditCard12" class="domain.CreditCard">
+		<property name="holder" value="Amya Rodriguez" />
+		<property name="make" value="VISA" />
+		<property name="number" value="4339257829049535" />
+		<property name="expirationMonth" value="04" />
+		<property name="expirationYear" value="28" />
+		<property name="CVV" value="546" />
+	</bean>
+	
+	<bean id="creditCard13" class="domain.CreditCard">
+		<property name="holder" value="Frieza" />
+		<property name="make" value="VISA" />
+		<property name="number" value="4764042457713154" />
+		<property name="expirationMonth" value="02" />
+		<property name="expirationYear" value="22" />
+		<property name="CVV" value="177" />
+	</bean>
+	
+	<bean id="creditCard14" class="domain.CreditCard">
+		<property name="holder" value="Frieza" />
+		<property name="make" value="VISA" />
+		<property name="number" value="4764042457713154" />
+		<property name="expirationMonth" value="02" />
+		<property name="expirationYear" value="22" />
+		<property name="CVV" value="177" />
+	</bean>
+	
+	<bean id="creditCard15" class="domain.CreditCard">
+		<property name="holder" value="Frieza" />
+		<property name="make" value="VISA" />
+		<property name="number" value="4764042457713154" />
+		<property name="expirationMonth" value="02" />
+		<property name="expirationYear" value="22" />
+		<property name="CVV" value="177" />
+	</bean>
+	
+	<bean id="creditCard16" class="domain.CreditCard">
+		<property name="holder" value="Dio Brando" />
+		<property name="make" value="MASTERCARD" />
+		<property name="number" value="4544963188930071" />
+		<property name="expirationMonth" value="11" />
+		<property name="expirationYear" value="20" />
+		<property name="CVV" value="366" />
+	</bean>
+	
+	<bean id="creditCard17" class="domain.CreditCard">
+		<property name="holder" value="Dio Brando" />
+		<property name="make" value="MASTERCARD" />
+		<property name="number" value="4544963188930071" />
+		<property name="expirationMonth" value="11" />
+		<property name="expirationYear" value="20" />
+		<property name="CVV" value="366" />
+	</bean>
+	
+	<bean id="creditCard18" class="domain.CreditCard">
+		<property name="holder" value="Calliu Pictures" />
+		<property name="make" value="VISA" />
+		<property name="number" value="4944053599316338" />
+		<property name="expirationMonth" value="06" />
+		<property name="expirationYear" value="20" />
+		<property name="CVV" value="128" />
+	</bean>
+	
+	<bean id="creditCard19" class="domain.CreditCard">
+		<property name="holder" value="Calliu Pictures" />
+		<property name="make" value="VISA" />
+		<property name="number" value="4944053599316338" />
+		<property name="expirationMonth" value="06" />
+		<property name="expirationYear" value="20" />
+		<property name="CVV" value="128" />
+	</bean>
+	
+	<bean id="creditCard20" class="domain.CreditCard">
+		<property name="holder" value="Calliu Pictures" />
+		<property name="make" value="VISA" />
+		<property name="number" value="4944053599316338" />
+		<property name="expirationMonth" value="06" />
+		<property name="expirationYear" value="20" />
+		<property name="CVV" value="128" />
+	</bean>
+	
+	<!-- SYSTEM CONFIGURATION -->
+
+	<bean id="systemConfiguration" class="domain.SystemConfiguration">
+		<property name="systemName" value="Acme-iRobot" />
+		<property name="banner" value="https://i.ibb.co/6Bpvwck/acme-irobot.png" />
+		<property name="countryCode" value="+034"></property>
+		<property name="welcomeMessage">
+			<util:map id="utilmap1" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="English"
+					value="Welcome to Acme iRobot! Welcome to a new era of computing" />
+				<entry key="Español"
+					value="¡Bienvenidos a Acme iRobot! ¡Bienvenidos a una nueva era de la computación!" />
+			</util:map>
+		</property>
+		<property name="timeResultsCached" value="5" />
+		<property name="maxResults" value="10" />
+	</bean>
+
+	<!-- COMMENTS -->
+
+	<!-- IROBOT 1 COMMENTS -->
+
+	<bean id="comment1" class="domain.Comment">
+		<property name="title" value="Very borring" />
+		<property name="body" value="It was very boring, what I usually like is destroy planets, not saving them." />
+		<property name="author" value="King Bradley" />
+		<property name="publishedDate" value="03/05/2019 21:57" />
+		<property name="iRobot" ref="iRobot1" />
+		<property name="writer" ref="scientist1" />
+	</bean>
+	<bean id="comment2" class="domain.Comment">
+		<property name="title" value="I think the same as that Boros guy" />
+		<property name="body" value="I also enjoy destroying planets." />
+		<property name="author" value="Meruem" />
+		<property name="publishedDate" value="10/09/2018 22:05" />
+		<property name="iRobot" ref="iRobot1" />
+		<property name="writer" ref="scientist2" />
+	</bean>
+	<bean id="comment3" class="domain.Comment">
+		<property name="title" value="What is climate change" />
+		<property name="body" value="I don't know what that is." />
+		<property name="author" value="Ragyo" />
+		<property name="publishedDate" value="19/04/2019 16:15" />
+		<property name="iRobot" ref="iRobot1" />
+		<property name="writer" ref="scientist3" />
+	</bean>
+	<bean id="comment4" class="domain.Comment">
+		<property name="title" value="Climate change doesn't exist" />
+		<property name="body" value="I you don't need to know more Ragyo." />
+		<property name="author" value="Frieza" />
+		<property name="publishedDate" value="09/07/2019 12:18" />
+		<property name="writer" ref="customer1" />
+		<property name="iRobot" ref="iRobot1" />
+	</bean> 
+	
+	<!-- IROBOT 3 COMMENTS -->
+	<bean id="comment5" class="domain.Comment">
+		<property name="title" value="Interesting..." />
+		<property name="body" value="I could use this SE thing to spread my teachings" />
+		<property name="author" value="Frieza" />
+		<property name="publishedDate" value="14/03/2019 20:47" />
+		<property name="iRobot" ref="iRobot3" />
+		<property name="writer" ref="customer1" />
+	</bean>
+	<bean id="comment6" class="domain.Comment">
+		<property name="title" value="Kono Dio Da!" />
+		<property name="body" value="Wryyyyy!" />
+		<property name="author" value="Dio" />
+		<property name="publishedDate" value="24/01/2019 22:05" />
+		<property name="iRobot" ref="iRobot3" />
+		<property name="writer" ref="customer2" />
+	</bean>
+	<bean id="comment7" class="domain.Comment">
+		<property name="title" value="Don't like it" />
+		<property name="body" value="I don't like what I cannot understand." />
+		<property name="author" value="King Bradley" />
+		<property name="publishedDate" value="28/06/2019 14:14" />
+		<property name="iRobot" ref="iRobot3" />
+		<property name="writer" ref="scientist1" />
+	</bean>
+	<bean id="comment8" class="domain.Comment">
+		<property name="title" value="I am Meruem, King of the chimera ants..." />
+		<property name="body" value="...and I approve this." />
+		<property name="author" value="Meruem" />
+		<property name="publishedDate" value="07/01/2019 22:16" />
+		<property name="iRobot" ref="iRobot3" />
+		<property name="writer" ref="scientist2" />
+	</bean>
+ 
+ 	<!-- IROBOT 7 COMMENTS -->
+	<bean id="comment9" class="domain.Comment">
+		<property name="title" value="Me gusta" />
+		<property name="body" value="Aunque jamás compraría algo tuyo" />
+		<property name="author" value="Meruem" />
+		<property name="publishedDate" value="06/11/2018 08:24" />
+		<property name="iRobot" ref="iRobot7" />
+		<property name="writer" ref="scientist2" />
+	</bean>
+	<bean id="comment10" class="domain.Comment">
+		<property name="title" value="Me encanta" />
+		<property name="body" value="Me llegó sin problemas y ya lo tengo encima de la tele" />
+		<property name="author" value="Calliu" />
+		<property name="publishedDate" value="09/04/2019 22:05" />
+		<property name="iRobot" ref="iRobot7" />
+		<property name="writer" ref="customer3" />
+	</bean>
+	
+	<!-- PURCHASES -->
+
+	<bean id="purchase1" class="domain.Purchase">
+		<property name="customer" ref="customer1" />
+		<property name="iRobot" ref="iRobot1" />
+		<property name="price" value="24.95" />
+		<property name="creditCard" ref="creditCard7" />
+		<property name="purchaseMoment" value="07/01/2019 22:16" />
+	</bean>
+
+	<bean id="purchase2" class="domain.Purchase">
+		<property name="customer" ref="customer2" />
+		<property name="iRobot" ref="iRobot1" />
+		<property name="price" value="24.95" />
+		<property name="creditCard" ref="creditCard8" />
+		<property name="purchaseMoment" value="17/12/2018 09:23" />
+	</bean>
+
+	<bean id="purchase3" class="domain.Purchase">
+		<property name="customer" ref="customer1" />
+		<property name="iRobot" ref="iRobot2" />
+		<property name="price" value="19.95" />
+		<property name="creditCard" ref="creditCard9" />
+		<property name="purchaseMoment" value="11/02/2019 10:37" />
+	</bean>
+
+	<bean id="purchase4" class="domain.Purchase">
+		<property name="customer" ref="customer2" />
+		<property name="iRobot" ref="iRobot5" />
+		<property name="price" value="529.99" />
+		<property name="creditCard" ref="creditCard10" />
+		<property name="purchaseMoment" value="19/03/2019 00:01" />
+	</bean>
+	
+	<bean id="purchase5" class="domain.Purchase">
+		<property name="customer" ref="customer2" />
+		<property name="iRobot" ref="iRobot7" />
+		<property name="price" value="75.50" />
+		<property name="creditCard" ref="creditCard11" />
+		<property name="purchaseMoment" value="19/03/2019 00:01" />
+	</bean>
+	
+	<bean id="purchase6" class="domain.Purchase">
+		<property name="customer" ref="customer3" />
+		<property name="iRobot" ref="iRobot5" />
+		<property name="price" value="529.99" />
+		<property name="creditCard" ref="creditCard19" />
+		<property name="purchaseMoment" value="19/03/2019 00:01" />
+	</bean>
+	
+	<bean id="purchase7" class="domain.Purchase">
+		<property name="customer" ref="customer3" />
+		<property name="iRobot" ref="iRobot1" />
+		<property name="price" value="24.95" />
+		<property name="creditCard" ref="creditCard18" />
+		<property name="purchaseMoment" value="19/03/2019 00:01" />
+	</bean>
+	
+	<bean id="purchase8" class="domain.Purchase">
+		<property name="customer" ref="customer2" />
+		<property name="iRobot" ref="iRobot7" />
+		<property name="price" value="75.50" />
+		<property name="creditCard" ref="creditCard17" />
+		<property name="purchaseMoment" value="19/04/2019 00:01" />
+	</bean>
+	
+	<bean id="purchase9" class="domain.Purchase">
+		<property name="customer" ref="customer2" />
+		<property name="iRobot" ref="iRobot4" />
+		<property name="price" value="24.95" />
+		<property name="creditCard" ref="creditCard16" />
+		<property name="purchaseMoment" value="19/03/2019 00:01" />
+	</bean>
+	
+	<bean id="purchase10" class="domain.Purchase">
+		<property name="customer" ref="customer1" />
+		<property name="iRobot" ref="iRobot6" />
+		<property name="price" value="999.99" />
+		<property name="creditCard" ref="creditCard12" />
+		<property name="purchaseMoment" value="19/03/2019 00:01" />
+	</bean>
+	
+	<bean id="purchase11" class="domain.Purchase">
+		<property name="customer" ref="customer1" />
+		<property name="iRobot" ref="iRobot4" />
+		<property name="price" value="24.95" />
+		<property name="creditCard" ref="creditCard13" />
+		<property name="purchaseMoment" value="19/03/2019 00:01" />
+	</bean>
+	
+	<bean id="purchase12" class="domain.Purchase">
+		<property name="customer" ref="customer1" />
+		<property name="iRobot" ref="iRobot10" />
+		<property name="price" value="66.66" />
+		<property name="creditCard" ref="creditCard14" />
+		<property name="purchaseMoment" value="19/03/2019 00:01" />
+	</bean>
+	
+	<bean id="purchase13" class="domain.Purchase">
+		<property name="customer" ref="customer1" />
+		<property name="iRobot" ref="iRobot9" />
+		<property name="price" value="199.99" />
+		<property name="creditCard" ref="creditCard15" />
+		<property name="purchaseMoment" value="19/03/2019 00:01" />
+	</bean>
+	
+</beans>
