@@ -1,6 +1,7 @@
 package forms;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
@@ -11,7 +12,7 @@ public class ActorRegistrationForm {
 
 	private int id, version;
 	private String name, middleName, surname, photo, email, phoneNumber,
-			address, username, password;
+			address, username, password, passwordConfirmation;
 
 	/* Getters and setters */
 
@@ -112,6 +113,16 @@ public class ActorRegistrationForm {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	@NotBlank
+	@Size(min = 5, max = 32)
+	public String getPasswordConfirmation() {
+		return this.passwordConfirmation;
+	}
+
+	public void setPasswordConfirmation(final String passwordConfirmation) {
+		this.passwordConfirmation = passwordConfirmation;
 	}
 
 }

@@ -73,12 +73,12 @@ public class PurchaseService {
 		Purchase result;
 		Actor principal;
 
-		Assert.notNull(purchase);
-		Assert.isTrue(purchase.getId() == 0);
+		Assert.notNull(purchase, "not.allowed");
+		Assert.isTrue(purchase.getId() == 0, "not.allowed");
 
-		Assert.notNull(purchase.getiRobot());
-		Assert.notNull(purchase.getCreditCard());
-		Assert.notNull(purchase.getCustomer());
+		Assert.notNull(purchase.getiRobot(), "not.allowed");
+		Assert.notNull(purchase.getCreditCard(), "not.allowed");
+		Assert.notNull(purchase.getCustomer(), "not.allowed");
 
 		principal = this.utilityService.findByPrincipal();
 		Assert.isTrue(purchase.getCustomer().equals(principal), "not.allowed");

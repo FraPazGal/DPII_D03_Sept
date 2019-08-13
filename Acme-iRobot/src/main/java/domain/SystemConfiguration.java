@@ -23,7 +23,7 @@ public class SystemConfiguration extends DomainEntity {
 
 	/* Attributes */
 
-	private String systemName, banner, countryCode;
+	private String systemName, banner, countryCode, makers;
 	private Map<String, String> welcomeMessage, breachNotification;
 	private Integer timeResultsCached, maxResults;
 
@@ -56,6 +56,15 @@ public class SystemConfiguration extends DomainEntity {
 
 	public void setCountryCode(String countryCode) {
 		this.countryCode = countryCode;
+	}
+	
+	@NotBlank
+	public String getMakers() {
+		return this.makers;
+	}
+
+	public void setMakers(final String makers) {
+		this.makers = makers;
 	}
 
 	@NotEmpty

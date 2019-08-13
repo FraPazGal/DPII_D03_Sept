@@ -8,21 +8,22 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
+<form:form action="comment/edit.do" modelAttribute="comment" id="form">
 <br>
 <fieldset style="width: 20%">
 	<legend style="font-size: 21px">
 		<spring:message code="comment.legend" />
 	</legend>
 	<br>
-	<form:form action="comment/edit.do" modelAttribute="comment" id="form">
+
 
 		<form:hidden path="IRobot" />
 
-		<acme:textbox code="comment.title" path="title" size="90px" linebreak="true"/><br>
-		<acme:textarea code="comment.body" path="body" cols="80px" rows="4"/><br><br>
-
+		<acme:textbox code="comment.title" path="title" size="113px"/><br>
+		<acme:textarea code="comment.body" path="body" cols="80px" rows="4"/><br>
+		
+</fieldset>
+<br>
 		<acme:submit code="mp.save" name="save" />&nbsp;
 		<acme:cancel code="mp.cancel" url="iRobot/display.do?iRobotId=${comment.IRobot.id}" />
-
-	</form:form>
-</fieldset>
+</form:form>

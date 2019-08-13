@@ -26,31 +26,30 @@
 			<acme:textbox code="config.cache" path="timeResultsCached" /><br>
 			<acme:textbox code="config.maxResults" path="maxResults" /><br>
 			
-			<strong><spring:message code="welcome.es" /></strong><br><br>
+			<strong><spring:message code="welcome.es" /></strong><br>
 			<input type="text" name="welcomeES" id="welcomeES" size="150%"
 				value="${welcome.get('Español')}" placeholder="<spring:message code='sysconfig.welcome.message.es' />">
 
-			<br><br><strong><spring:message code="welcome.en" /></strong><br><br>
+			<br><br><strong><spring:message code="welcome.en" /></strong><br>
 			<input type="text" name="welcomeEN" id="welcomeEN" size="150%" value="${welcome.get('English')}"
 				placeholder="<spring:message code='sysconfig.welcome.message.en' />">
 				
 			<br><br><form:errors cssClass="error" path="welcomeMessage" /><br/>
 			
-			<strong><spring:message code="breach.es" /></strong><br><br>
+			<strong><spring:message code="breach.es" /></strong><br>
 			<input type="text" name="breachES" id="breachES" size="150%"
 				value="${breach.get('Español')}" placeholder="<spring:message code='sysconfig.breach.message.es' />">
 
-			<br><br><strong><spring:message code="breach.en" /></strong><br><br>
+			<br><br><strong><spring:message code="breach.en" /></strong><br>
 			<input type="text" name="breachEN" id="breachEN" size="150%" value="${breach.get('English')}"
 				placeholder="<spring:message code='sysconfig.breach.message.en' />">
 				
-			<br><br><form:errors cssClass="error" path="breachNotification" /><br/>
+			<br><br><form:errors cssClass="error" path="breachNotification" />
 
-			<acme:submit code="mp.save" name="save" onclick="return checkEmpty('${pageContext.response.locale.language}')" />
-			<acme:cancel code="mp.cancel" url="config/admin/display.do" />
-
-			<br />
 			<form:errors cssClass="error" code="${message}" />
 		</form:form>
 	</fieldset>
+	<br>
+	<acme:submit code="mp.save" name="save" onclick="return checkEmpty('${pageContext.response.locale.language}')" />
+	<acme:cancel code="mp.cancel" url="config/admin/display.do" />
 </security:authorize>

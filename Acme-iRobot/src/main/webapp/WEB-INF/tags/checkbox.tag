@@ -26,39 +26,15 @@
 <%@ attribute name="path" required="true" %>
 <%@ attribute name="code" required="true" %>
 
-<%@ attribute name="codeErr" required="false" %>
-<%@ attribute name="size" required="false" %>
-<%@ attribute name="placeholder" required="false" %>
-<%@ attribute name="readonly" required="false" %>
-<%@ attribute name="linebreak" required="false" %>
-<%@ attribute name="password" required="false" %>
-
-<jstl:if test="${readonly == null}">
-	<jstl:set var="readonly" value="false" />
-</jstl:if>
-
 <%-- Definition --%>
 
 <div>
-	<jstl:if test="${not empty placeholder }">
-		<spring:message code="${placeholder}" var="place" />
-	</jstl:if>
 	
+	<form:checkbox path="${path}"/>
 	<form:label path="${path}">
 		<strong><spring:message code="${code}" /></strong>
 	</form:label>
-	<jstl:if test="${not empty linebreak }">
-		<br><br>
-	</jstl:if>	
 	<br>
-	<jstl:if test="${password eq null }">
-		<form:input path="${path}" readonly="${readonly}" size="${size }"
-			placeholder="${place}"/>	
-	</jstl:if>
-	<jstl:if test="${password eq true }">
-		<form:password path="${path}" size="${size }"
-			placeholder="${place}"/>	
-	</jstl:if>
-	<br>
-	<form:errors path="${path}" cssClass="error" cssStyle=""/>
+	<form:errors path="${path}" cssClass="error"/>
+	
 </div>	

@@ -1,5 +1,5 @@
 <%--
- * textarea.tag
+ * select.tag
  *
  * Copyright (C) 2019 Universidad de Sevilla
  * 
@@ -25,33 +25,21 @@
 
 <%@ attribute name="path" required="true" %>
 <%@ attribute name="code" required="true" %>
-<%@ attribute name="readonly" required="false" %>
-<%@ attribute name="cols" required="false" %>
-<%@ attribute name="rows" required="false" %>
-<%@ attribute name="fixed" required="false" %>
-
-<jstl:if test="${readonly == null}">
-	<jstl:set var="readonly" value="false" />
-</jstl:if>
+<%@ attribute name="items" required="true" type="java.util.Collection" %>
 
 <%-- Definition --%>
 
-<div class="form-group">
-	<form:label path="${path}">
-		<strong><spring:message code="${code}" /></strong>
-	</form:label>
+<div>
+	<strong>
+		<form:label path="${path}">
+			<spring:message code="${code}" />
+		</form:label>
+	</strong>
 	<br>
-	<form:textarea path="${path}" readonly="${readonly}" cols="${cols}" rows="${rows }"/>
-	<br>
+	<form:select path="${path}">
+		<form:options items="${items}"/>
+	</form:select>
 	<form:errors path="${path}" cssClass="error" />
 </div>
-
-<style>
-
-textarea {
-   resize: none;
-}
-
-</style>
 
 

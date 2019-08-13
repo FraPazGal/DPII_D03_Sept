@@ -35,7 +35,7 @@ public class DashboardController extends AbstractController{
 		
 		try {
 			principal = this.utilityService.findByPrincipal();
-			Assert.isTrue(this.utilityService.checkAuthority(principal, "ADMIN"));
+			Assert.isTrue(this.utilityService.checkAuthority(principal, "ADMIN"), "not.allowed");
 			
 			Double [] statsIRobotsPerScientist = this.dashboardService.StatsIRobotsPerScientist();
 			List<Scientist> top10ScientistByPurchases = this.dashboardService.Top10ScientistByPurchases();

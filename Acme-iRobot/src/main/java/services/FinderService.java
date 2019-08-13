@@ -85,7 +85,7 @@ public class FinderService {
 		Actor principal;
 		Finder aux;
 		
-		Assert.isTrue(finder.getId() != 0);
+		Assert.isTrue(finder.getId() != 0, "not.allowed");
 		
 		principal = this.utilityService.findByPrincipal();
 		aux = this.findOne(finder.getId());

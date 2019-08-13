@@ -37,6 +37,7 @@
 
 			<acme:textbox code="actor.username" path="username" size="40px"/><br/>
 			<acme:textbox code="actor.password" path="password" password="true" size="40px"/><br/>
+			<acme:textbox code="actor.passwordConfirmation" path="passwordConfirmation" password="true" size="40px"/><br/>
 		</fieldset>
 		<br />
 
@@ -51,14 +52,7 @@
 			<acme:textbox code="actor.surname" path="surname" size="40px"/><br/>
 			<acme:textbox code="actor.photo" path="photo" size="40px"/><br/>
 			<acme:textbox code="actor.email" path="email" size="40px"/><br/>
-			
-			<form:errors path="phoneNumber" cssClass="error" />
-			<strong><form:label path="phoneNumber">
-					<spring:message code="actor.phone" />
-				</form:label></strong>
-			<form:input path="phoneNumber" size="40px"/>
-			<br/><br>
-		
+			<acme:textbox code="actor.phone" path="phoneNumber" size="40px"/><br/>
 			<acme:textbox code="actor.address" path="address" size="40px"/><br/>
 			<acme:textbox code="actor.VATNumber" path="VATNumber" size="40px"/><br/>
 
@@ -72,12 +66,21 @@
 			<br/>
 			
 			<acme:textbox code="mp.cc.holder" path="holder" size="40px"/><br/>
-			<acme:textbox code="mp.cc.make" path="make" placeholder="make.placeholder" size="40px"/><br/>
+			<acme:selectString items="${makers}" code="mp.cc.make" path="make"/><br/>
 			<acme:textbox code="mp.cc.number" path="number" placeholder="ccnumber.placeholder" size="40px"/><br/>
 			<acme:textbox code="mp.cc.expirationMonth" path="expirationMonth" placeholder="expirationMonth.placeholder" size="5px"/><br/>
 			<acme:textbox code="mp.cc.expirationYear" path="expirationYear" placeholder="expirationMonth.placeholder" size="5px"/><br/>
 			<acme:textbox code="mp.cc.CVV" path="CVV" placeholder="cvv.placeholder" size="5px"/><br/>
 			
+		</fieldset>
+		<br />
+		
+		<fieldset>
+			<legend style="font-size: 21px">
+				<spring:message code="actor.terms" />
+			</legend>
+
+			<acme:checkbox code="actor.acceptTerms" path="termsAndConditions"/>
 		</fieldset>
 		<br />
 

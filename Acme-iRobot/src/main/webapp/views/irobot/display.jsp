@@ -83,7 +83,7 @@
 		</display:table>
 	</jstl:if>
 			
-	<security:authorize access="hasAnyRole('CUSTOMER', 'SCIENTIST')">
+	<security:authorize access="isAuthenticated()">
 		<br>
 		<input type="button"
 			onclick="redirect: location.href = 'comment/create.do?iRobotId=${iRobot.id}';"

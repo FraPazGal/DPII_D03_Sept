@@ -129,6 +129,9 @@ public class AdministratorService {
 
 	@Autowired
 	private UtilityService utilityService;
+	
+	@Autowired
+	private CommentService commentService;
 
 	@Autowired
 	private Validator validator;
@@ -170,7 +173,7 @@ public class AdministratorService {
 		Administrator res;
 		Actor principal;
 
-		Assert.notNull(administrator);
+		Assert.notNull(administrator, "not.allowed");
 
 		principal = this.utilityService.findByPrincipal();
 
@@ -194,9 +197,10 @@ public class AdministratorService {
 	public void delete(final Administrator administrator) {
 		Actor principal = this.utilityService.findByPrincipal();
 		
-		Assert.notNull(administrator);
+		Assert.notNull(administrator, "not.allowed");
 		Assert.isTrue(principal.getId() == administrator.getId(), "not.allowed");
 
+		this.commentService.deleteComments(administrator.getId());
 		this.administratorRepository.delete(administrator);
 	}
 
@@ -232,6 +236,7 @@ public class AdministratorService {
 		res.setUserAccount(userAccount);
 
 		if(!binding.hasErrors()) {
+			/* Email */
 			if (form.getEmail() != null) {
 				try {
 					Assert.isTrue(this.utilityService.checkEmail(form.getEmail(), "ADMIN"));
@@ -240,29 +245,40 @@ public class AdministratorService {
 					binding.rejectValue("email", "email.error");
 				}
 			}
-		}
-		
-		/* Username */
-		if (form.getUsername() != null)
-			try {
-				Assert.isTrue(this.utilityService.existsUsername(form.getUsername()));
-			} catch (final Throwable oops) {
-				binding.rejectValue("username", "username.error");
+			
+			/* Password confirmation */
+			if (form.getPassword() != null) {
+				try {
+					Assert.isTrue(form.getPassword().equals(form.getPasswordConfirmation()));
+				} catch (final Throwable oops) {
+					binding.rejectValue("passwordConfirmation", "password.confirmation.error");
+				}
+			}
+			
+			/* Username */
+			if (form.getUsername() != null) {
+				try {
+					Assert.isTrue(this.utilityService.existsUsername(form.getUsername()));
+				} catch (final Throwable oops) {
+					binding.rejectValue("username", "username.error");
+				}
 			}
 
-		if (form.getPhoneNumber() != null) {
-			try {
-				final char[] phoneArray = form.getPhoneNumber().toCharArray();
-				if ((!form.getPhoneNumber().equals(null) && !form
-						.getPhoneNumber().equals("")))
-					if (phoneArray[0] != '+'
-							&& Character.isDigit(phoneArray[0])) {
-						final String cc = this.systemConfigurationService
-								.findMySystemConfiguration().getCountryCode();
-						form.setPhoneNumber(cc + " " + form.getPhoneNumber());
-					}
-			} catch (Throwable oops) {
-				binding.rejectValue("phoneNumber", "phone.error");
+			/* Managing phone number */
+			if (form.getPhoneNumber() != null) {
+				try {
+					final char[] phoneArray = form.getPhoneNumber().toCharArray();
+					if ((!form.getPhoneNumber().equals(null) && !form
+							.getPhoneNumber().equals("")))
+						if (phoneArray[0] != '+'
+								&& Character.isDigit(phoneArray[0])) {
+							final String cc = this.systemConfigurationService
+									.findMySystemConfiguration().getCountryCode();
+							form.setPhoneNumber(cc + " " + form.getPhoneNumber());
+						}
+				} catch (Throwable oops) {
+					binding.rejectValue("phoneNumber", "phone.error");
+				}
 			}
 		}
 		return res;
@@ -287,6 +303,7 @@ public class AdministratorService {
 		this.validator.validate(res, binding);
 		
 		if(!binding.hasErrors()) {
+			/* Email */
 			if (actorEditionForm.getEmail() != null) {
 				try {
 					Assert.isTrue(this.utilityService.checkEmail(actorEditionForm.getEmail(), "ADMIN"));

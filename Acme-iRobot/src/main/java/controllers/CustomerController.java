@@ -1,5 +1,7 @@
 package controllers;
 
+import java.util.Arrays;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -14,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import services.ActorService;
 import services.CustomerService;
 import services.FinderService;
+import services.SystemConfigurationService;
 import services.UtilityService;
 import domain.Actor;
 import domain.Customer;
@@ -38,6 +41,9 @@ public class CustomerController extends AbstractController {
 	
 	@Autowired
 	private FinderService finderService;
+	
+	@Autowired
+	private SystemConfigurationService systemConfigurationService;
 
 	/* Display */
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
@@ -109,7 +115,7 @@ public class CustomerController extends AbstractController {
 
 		try {
 			Assert.isTrue(this.utilityService.findByPrincipal().getId() == userForm.getId()
-					&& this.actorService.findOne(this.utilityService.findByPrincipal().getId()) != null);
+					&& this.actorService.findOne(this.utilityService.findByPrincipal().getId()) != null, "not.allowed");
 
 			Customer customer = this.customerService.reconstruct(userForm, binding);
 
@@ -153,8 +159,11 @@ public class CustomerController extends AbstractController {
 			final String messageCode) {
 		ModelAndView result = new ModelAndView("customer/register");
 
+		userRegistrationForm.setTermsAndConditions(false);
 		result.addObject("userRegistrationForm", userRegistrationForm);
 		result.addObject("errMsg", messageCode);
+		String[] aux = this.systemConfigurationService.findMySystemConfiguration().getMakers().split(",");
+		result.addObject("makers", Arrays.asList(aux));
 
 		return result;
 	}
@@ -166,11 +175,12 @@ public class CustomerController extends AbstractController {
 
 	protected ModelAndView createEditModelAndView(
 			final UserForm userForm, final String messageCode) {
-		ModelAndView result;
+		ModelAndView result = new ModelAndView("customer/edit");
 
-		result = new ModelAndView("customer/edit");
 		result.addObject("userForm", userForm);
 		result.addObject("errMsg", messageCode);
+		String[] aux = this.systemConfigurationService.findMySystemConfiguration().getMakers().split(",");
+		result.addObject("makers", Arrays.asList(aux));
 
 		return result;
 	}

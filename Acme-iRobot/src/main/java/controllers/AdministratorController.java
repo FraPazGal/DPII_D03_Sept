@@ -101,7 +101,7 @@ public class AdministratorController extends AbstractController {
 		ModelAndView result =  new ModelAndView("redirect:/administrator/display.do");
 		try {
 			Assert.isTrue(this.utilityService.findByPrincipal().getId() == actorForm.getId()
-					&& this.actorService.findOne(this.utilityService.findByPrincipal().getId()) != null);
+					&& this.actorService.findOne(this.utilityService.findByPrincipal().getId()) != null, "not.allowed");
 
 			Administrator administrator = this.administratorService.reconstruct(actorForm, binding);
 

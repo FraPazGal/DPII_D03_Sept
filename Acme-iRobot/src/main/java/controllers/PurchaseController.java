@@ -2,6 +2,7 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.IRobotService;
 import services.PurchaseService;
+import services.SystemConfigurationService;
 import services.UtilityService;
 import domain.Actor;
 import domain.Customer;
@@ -36,6 +38,9 @@ public class PurchaseController extends AbstractController {
 	
 	@Autowired
 	private IRobotService		iRobotService;
+	
+	@Autowired
+	private SystemConfigurationService systemConfigurationService;
 
 	/* Display */
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
@@ -187,15 +192,15 @@ public class PurchaseController extends AbstractController {
 		ModelAndView result = new ModelAndView("purchase/edit");
 		
 		result.addObject("purchaseForm", purchaseForm);
-		
 		try {
 			result.addObject("customer", this.utilityService.findUserByPrincipal());
+			String[] aux = this.systemConfigurationService.findMySystemConfiguration().getMakers().split(",");
+			result.addObject("makers", Arrays.asList(aux));
 		} catch (Throwable oops) {
 			result.addObject("errMsg", oops.getMessage());
 		}
-		
 		result.addObject("errMsg", messageCode);
-
+		
 		return result;
 	}
 }

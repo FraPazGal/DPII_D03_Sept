@@ -33,7 +33,7 @@
 				<br/>
 				
 				<acme:textbox code="mp.cc.holder" path="holder" size="40px"/><br/>
-				<acme:textbox code="mp.cc.make" path="make" placeholder="make.placeholder" size="40px"/><br/>
+				<acme:selectString items="${makers}" code="mp.cc.make" path="make"/><br/>
 				<acme:textbox code="mp.cc.number" path="number" placeholder="ccnumber.placeholder" size="40px"/><br/>
 				<acme:textbox code="mp.cc.expirationMonth" path="expirationMonth" placeholder="expirationMonth.placeholder" size="5px"/><br/>
 				<acme:textbox code="mp.cc.expirationYear" path="expirationYear" placeholder="expirationMonth.placeholder" size="5px"/><br/>

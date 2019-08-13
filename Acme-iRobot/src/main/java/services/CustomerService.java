@@ -87,7 +87,7 @@ public class CustomerService {
 		Customer res;
 		Actor principal;
 
-		Assert.notNull(customer);
+		Assert.notNull(customer, "not.allowed");
 
 		if (customer.getId() != 0) {
 			principal = this.utilityService.findByPrincipal();
@@ -104,7 +104,7 @@ public class CustomerService {
 	public void delete(final Customer customer) {
 		Actor principal = this.utilityService.findByPrincipal();
 		
-		Assert.notNull(customer);
+		Assert.notNull(customer, "not.allowed");
 		Assert.isTrue(principal.getId() == customer.getId(), "not.allowed");
 		Assert.isTrue(this.utilityService.checkAuthority(principal, "CUSTOMER"), "not.allowed");
 		
@@ -178,6 +178,34 @@ public class CustomerService {
 				res.setCreditCard(cc);
 			}
 			
+			/* Username */
+			if (form.getUsername() != null) {
+				try {
+					Assert.isTrue(this.utilityService.existsUsername(form.getUsername()));
+				} catch (final Throwable oops) {
+					binding.rejectValue("username", "username.error");
+				}
+			}
+			
+			/* Password confirmation */
+			if (form.getPassword() != null) {
+				try {
+					Assert.isTrue(form.getPassword().equals(form.getPasswordConfirmation()));
+				} catch (final Throwable oops) {
+					binding.rejectValue("passwordConfirmation", "password.confirmation.error");
+				}
+			}
+
+			/* Terms&Conditions */
+			if (form.getTermsAndConditions() != null) {
+				try {
+					Assert.isTrue((form.getTermsAndConditions()));
+				} catch (final Throwable oops) {
+					binding.rejectValue("termsAndConditions", "terms.error");
+				}
+			}
+				
+			/* Email */
 			if (form.getEmail() != null) {
 				try {
 					Assert.isTrue(this.utilityService.checkEmail(form.getEmail(),"CUSTOMER"));
@@ -203,7 +231,6 @@ public class CustomerService {
 				}
 			}
 		}
-		
 		return res;
 	}
 
@@ -255,6 +282,7 @@ public class CustomerService {
 				res.setCreditCard(cc);
 			}
 			
+			/* Email */
 			if (form.getEmail() != null) {
 				try {
 					Assert.isTrue(this.utilityService.checkEmail(form.getEmail(),"CUSTOMER"));

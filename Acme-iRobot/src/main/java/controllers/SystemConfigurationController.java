@@ -28,7 +28,7 @@ public class SystemConfigurationController extends AbstractController {
 		ModelAndView result = new ModelAndView("config/display");
 
 		try {
-			Assert.isTrue(this.utilityService.checkAuthority(this.utilityService.findByPrincipal(), "ADMIN"));
+			Assert.isTrue(this.utilityService.checkAuthority(this.utilityService.findByPrincipal(), "ADMIN"), "not.allowed");
 
 			SystemConfiguration config = this.sysconfigService.findMySystemConfiguration();
 
@@ -46,7 +46,7 @@ public class SystemConfigurationController extends AbstractController {
 		ModelAndView result = new ModelAndView("config/edit");
 
 		try {
-			Assert.isTrue(this.utilityService.checkAuthority(this.utilityService.findByPrincipal(), "ADMIN"));
+			Assert.isTrue(this.utilityService.checkAuthority(this.utilityService.findByPrincipal(), "ADMIN"), "not.allowed");
 
 			SystemConfiguration config = this.sysconfigService.findMySystemConfiguration();
 

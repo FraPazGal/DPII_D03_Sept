@@ -27,40 +27,39 @@ public class CommentController extends AbstractController {
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create(@RequestParam Integer iRobotId) {
-		ModelAndView res = new ModelAndView("comment/create");
+		ModelAndView result = new ModelAndView("comment/create");
 
 		try {
 			IRobot iRobot = this.iRobotService.findOne(iRobotId);
 			Comment comment = this.commentService.createWithIRobot(iRobot);
 			
-			res.addObject("comment", comment);
-			res.addObject("iRobot", iRobot);
+			result.addObject("comment", comment);
+			result.addObject("iRobot", iRobot);
 
 		} catch (Throwable oops) {
-			res = new ModelAndView("redirect:../iRobot/display.do?iRobotId=" + iRobotId);
+			result = new ModelAndView("redirect:../iRobot/display.do?iRobotId=" + iRobotId);
 		}
-		return res;
+		return result;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(Comment comment, BindingResult binding) {
-		ModelAndView res;
+		ModelAndView result = new ModelAndView("comment/create");
 		Comment toSave;
 
 		try {
 			toSave = this.commentService.reconstruct(comment, binding);
 
 			if (binding.hasErrors()) {
-				res = new ModelAndView("comment/create");
-				res.addObject("comment", comment);
+				result.addObject("comment", comment);
 			} else {
 				this.commentService.save(toSave);
 
-				res = new ModelAndView("redirect:../iRobot/display.do?iRobotId=" + toSave.getIRobot().getId());
+				result = new ModelAndView("redirect:../iRobot/display.do?iRobotId=" + toSave.getIRobot().getId());
 			}
 		} catch (Throwable oops) {
-			res = new ModelAndView("welcome/index");
+			result = new ModelAndView("welcome/index");
 		}
-		return res;
+		return result;
 	}
 }

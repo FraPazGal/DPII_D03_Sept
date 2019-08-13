@@ -38,6 +38,7 @@
 
 			<acme:textbox code="actor.username" path="username" size="40px"/><br/>
 			<acme:textbox code="actor.password" path="password" password="true" size="40px"/><br/>
+			<acme:textbox code="actor.passwordConfirmation" path="passwordConfirmation" password="true" size="40px"/><br/>
 			
 		</fieldset>
 		<br />
@@ -53,14 +54,7 @@
 			<acme:textbox code="actor.surname" path="surname" size="40px"/><br/>
 			<acme:textbox code="actor.photo" path="photo" size="40px"/><br/>
 			<acme:textbox code="actor.email" path="email" size="40px"/><br/>
-			
-			<form:errors path="phoneNumber" cssClass="error" />
-			<strong><form:label path="phoneNumber">
-					<spring:message code="actor.phone" />
-				</form:label></strong>
-			<form:input path="phoneNumber" size="40px"/>
-			<br/><br>
-		
+			<acme:textbox code="actor.phone" path="phoneNumber" size="40px"/><br/>
 			<acme:textbox code="actor.address" path="address" size="40px"/><br/>
 		</fieldset>
 		<br /><br>

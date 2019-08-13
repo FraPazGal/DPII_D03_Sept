@@ -56,7 +56,7 @@
 			</div>
 		</fieldset>
 		
-		<jstl:if test="${customer.creditCard ne null }">
+		<jstl:if test="${scientist.creditCard ne null }">
 		
 			<br><br>
 			<fieldset style="width: 20%">

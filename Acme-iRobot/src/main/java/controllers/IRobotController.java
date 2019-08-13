@@ -64,6 +64,7 @@ public class IRobotController extends AbstractController {
 			result.addObject("isPrincipal", isPrincipal);
 			result.addObject("comments", comments);
 			result.addObject("requestURI", "iRobot/display.do?iRobotId=" + iRobotId);
+			
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/");
 		}
@@ -110,7 +111,6 @@ public class IRobotController extends AbstractController {
 			result.addObject("listConf", listConf);
 			result.addObject("isPrincipal", isPrincipal);
 			result.addObject("range", range);
-
 		} catch (final Throwable oops) {
 			result.addObject("errMsg", oops.getMessage());
 		}
@@ -141,7 +141,7 @@ public class IRobotController extends AbstractController {
 
 		try {
 			iRobot = this.iRobotService.findOne(iRobotId);
-			Assert.notNull(iRobot);
+			Assert.notNull(iRobot, "not.allowed");
 
 			principal = this.utilityService.findByPrincipal();
 			Assert.isTrue(iRobot.getScientist().equals((Scientist) principal), "not.allowed");

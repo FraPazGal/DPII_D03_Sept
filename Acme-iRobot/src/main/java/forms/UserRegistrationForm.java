@@ -1,5 +1,8 @@
 package forms;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import org.hibernate.validator.constraints.CreditCardNumber;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
@@ -9,11 +12,11 @@ import domain.User;
 
 public class UserRegistrationForm {
 
-	/* Attributes */
+	/* User Attributes */
 
 	private int id, version;
 	private String name, VATNumber, surname, photo, email, phoneNumber,
-			address, username, password;
+			address, username, password, passwordConfirmation;
 	
 	/* Credit Card attributes */
 	private String holder;
@@ -22,6 +25,9 @@ public class UserRegistrationForm {
 	private Integer expirationMonth;
 	private Integer expirationYear;
 	private Integer CVV;
+	
+	/* Form attributes */
+	private Boolean	termsAndConditions;
 
 	/* Getters and setters */
 	
@@ -127,12 +133,23 @@ public class UserRegistrationForm {
 	}
 
 	@NotBlank
+	@Size(min = 5, max = 32)
 	public String getPassword() {
 		return password;
 	}
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	@NotBlank
+	@Size(min = 5, max = 32)
+	public String getPasswordConfirmation() {
+		return this.passwordConfirmation;
+	}
+
+	public void setPasswordConfirmation(final String passwordConfirmation) {
+		this.passwordConfirmation = passwordConfirmation;
 	}
 	
 	@NotBlank
@@ -194,6 +211,15 @@ public class UserRegistrationForm {
 
 	public void setCVV(Integer CVV) {
 		this.CVV = CVV;
+	}
+	
+	@NotNull
+	public Boolean getTermsAndConditions() {
+		return this.termsAndConditions;
+	}
+
+	public void setTermsAndConditions(final Boolean termsAndConditions) {
+		this.termsAndConditions = termsAndConditions;
 	}
 
 }

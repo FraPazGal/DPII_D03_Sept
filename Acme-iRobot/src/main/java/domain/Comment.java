@@ -25,7 +25,7 @@ public class Comment extends DomainEntity {
 	private String title, body, author;
 	private Date publishedDate;
 	private IRobot iRobot;
-	private User writer;
+	private Actor writer;
 
 	/* Getters and setters */
 
@@ -79,11 +79,11 @@ public class Comment extends DomainEntity {
 
 	@Valid
 	@ManyToOne(optional = true)
-	public User getWriter() {
+	public Actor getWriter() {
 		return writer;
 	}
 
-	public void setWriter(User writer) {
+	public void setWriter(Actor writer) {
 		this.writer = writer;
 	}
 }

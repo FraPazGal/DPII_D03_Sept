@@ -58,8 +58,27 @@ public class ExportDataController extends AbstractController {
 				+ actor.getEmail() + " \r\n" + "Phone Number: "
 				+ actor.getPhoneNumber() + " \r\n" + "Address: "
 				+ actor.getAddress() + " \r\n" + " \r\n" + "\r\n";
+		
 		res += "\r\n\r\n";
 		res += "----------------------------------------";
+		res += "\r\n\r\n";
+		
+		res += "Comments:";
+		res += "\r\n\r\n";
+		Collection<Comment> comments = this.commentService.findCommentByActorId(actor.getId());
+		for (Comment comment : comments) {
+			res += "Comment: " + "\r\n\r\n";
+			res += "Published Date: " + comment.getPublishedDate()+ "\r\n\r\n";
+			res += "Title: " + comment.getTitle()+ "\r\n\r\n";
+			res += "Body: " + comment.getBody()+ "\r\n\r\n";
+			res += "iRobot: " + comment.getIRobot().getTitle()+ "\r\n\r\n";
+			res += "-----------";
+			res += "\r\n\r\n";
+		}
+		
+		res += "\r\n\r\n";
+		res += "----------------------------------------";
+		
 		String downloadStringContent = res; // implement this
 		try {
 			OutputStream out = resp.getOutputStream();
@@ -137,7 +156,7 @@ public class ExportDataController extends AbstractController {
 		
 		res += "Comments:";
 		res += "\r\n\r\n";
-		Collection<Comment> comments = this.commentService.findCommentByUserId(customer.getId());
+		Collection<Comment> comments = this.commentService.findCommentByActorId(customer.getId());
 		for (Comment comment : comments) {
 			res += "Comment: " + "\r\n\r\n";
 			res += "Published Date: " + comment.getPublishedDate()+ "\r\n\r\n";
@@ -212,7 +231,7 @@ public class ExportDataController extends AbstractController {
 		
 		res += "Comments:";
 		res += "\r\n\r\n";
-		Collection<Comment> comments = this.commentService.findCommentByUserId(scientist.getId());
+		Collection<Comment> comments = this.commentService.findCommentByActorId(scientist.getId());
 		for (Comment comment : comments) {
 			res += "Comment: " + "\r\n\r\n";
 			res += "Published Date: " + comment.getPublishedDate()+ "\r\n\r\n";

@@ -67,7 +67,7 @@ public class UtilityService {
 	}
 
 	public boolean checkAuthority(final Actor actor, final String authority) {
-		Assert.notNull(actor);
+		Assert.notNull(actor, "not.allowed");
 		boolean result = false;
 		if (actor.getUserAccount().getAuthorities().iterator().next()
 				.getAuthority().equals(authority))

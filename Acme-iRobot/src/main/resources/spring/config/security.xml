@@ -105,9 +105,9 @@
 			access="isAnonymous()" />
 
 		<security:intercept-url pattern="/comment/create.do"
-			access="hasAnyRole('CUSTOMER','SCIENTIST')" />
+			access="isAuthenticated()" />
 		<security:intercept-url pattern="/comment/edit.do"
-			access="hasAnyRole('CUSTOMER','SCIENTIST')" />
+			access="isAuthenticated()" />
 
 		<security:intercept-url pattern="/**"
 			access="hasRole('NONE')" />

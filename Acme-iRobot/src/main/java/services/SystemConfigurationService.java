@@ -33,7 +33,7 @@ public class SystemConfigurationService {
 
 	public SystemConfiguration save(SystemConfiguration systemConfiguration) {
 		
-		Assert.isTrue(this.utilityService.checkAuthority(this.utilityService.findByPrincipal(), "ADMIN"));
+		Assert.isTrue(this.utilityService.checkAuthority(this.utilityService.findByPrincipal(), "ADMIN"), "not.allowed");
 		
 		return this.systemConfigurationRepository.save(systemConfiguration);
 	}

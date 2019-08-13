@@ -36,7 +36,7 @@
 		<property name="surname" value="Dominator of the Universe" />
 		<property name="photo"
 			value="https://vignette.wikia.nocookie.net/onepunchman/images/c/ce/Boros_color.jpg/revision/latest?cb=20151017212925" />
-		<property name="email" value="boros@yahoo.com" />
+		<property name="email" value="boros@" />
 		<property name="phoneNumber" value="+34666666666" />
 		<property name="address" value="C/ Collapsing Star Roaring Cannon" />
 		<property name="userAccount" ref="userAdmin1" />
@@ -48,6 +48,7 @@
 		<property name="systemName" value="Acme-iRobot" />
 		<property name="banner" value="https://i.ibb.co/6Bpvwck/acme-irobot.png" />
 		<property name="countryCode" value="+034"></property>
+		<property name="makers" value="VISA,MASTERCARD,DINNERS,AMEX"/>
 		<property name="welcomeMessage">
 			<util:map id="utilmap1" map-class="java.util.HashMap"
 				key-type="java.lang.String" value-type="java.lang.String">

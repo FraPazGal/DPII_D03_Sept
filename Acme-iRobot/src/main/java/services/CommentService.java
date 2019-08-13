@@ -14,7 +14,6 @@ import repositories.CommentRepository;
 import domain.Actor;
 import domain.Comment;
 import domain.IRobot;
-import domain.User;
 
 @Transactional
 @Service
@@ -40,10 +39,9 @@ public class CommentService {
 		Actor principal;
 
 		principal = this.utilityService.findByPrincipal();
-		Assert.isTrue(this.utilityService.checkAuthority(principal, "SCIENTIST") || 
-				this.utilityService.checkAuthority(principal, "CUSTOMER"), "not.allowed");
+		Assert.notNull(principal, "not.allowed");
 
-		result.setWriter((User) principal);
+		result.setWriter(principal);
 		result.setAuthor(principal.getUserAccount().getUsername());
 		result.setPublishedDate(new Date(System.currentTimeMillis() - 1));
 		
@@ -64,10 +62,10 @@ public class CommentService {
 	public Comment save(final Comment comment) {
 		Comment result;
 
-		Assert.isTrue(comment.getId() == 0);
-		Assert.notNull(comment.getIRobot());
-		Assert.notNull(comment.getTitle());
-		Assert.notNull(comment.getBody());
+		Assert.isTrue(comment.getId() == 0, "not.allowed");
+		Assert.notNull(comment.getIRobot(), "not.allowed");
+		Assert.notNull(comment.getTitle(), "not.allowed");
+		Assert.notNull(comment.getBody(), "not.allowed");
 		
 		result = this.commentRepository.save(comment);
 
@@ -102,13 +100,13 @@ public class CommentService {
 		return result;
 	}
 	
-	public Collection<Comment> findCommentByUserId(Integer userId) {
+	public Collection<Comment> findCommentByActorId(Integer userId) {
 		
-		return this.commentRepository.findCommentByUserId(userId);
+		return this.commentRepository.findCommentByActorId(userId);
 	}
 	
 	public void deleteComments(int userId) {
-		Collection<Comment> toDelete = this.commentRepository.findCommentByUserId(userId);
+		Collection<Comment> toDelete = this.commentRepository.findCommentByActorId(userId);
 		this.commentRepository.deleteInBatch(toDelete);
 	}
 

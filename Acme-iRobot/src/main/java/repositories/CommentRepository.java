@@ -15,6 +15,6 @@ public interface CommentRepository extends JpaRepository<Comment, Integer> {
 	Collection<Comment> getCommentsOfIRobot(int iRobotId);
 	
 	@Query("select c from Comment c where c.writer.id = ?1")
-	Collection<Comment> findCommentByUserId(int userId);
+	Collection<Comment> findCommentByActorId(int actorId);
 
 }

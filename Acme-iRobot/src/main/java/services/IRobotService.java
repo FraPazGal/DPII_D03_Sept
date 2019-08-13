@@ -69,18 +69,18 @@ public class IRobotService {
 		Actor principal;
 		IRobot result;
 
-		Assert.notNull(iRobot);
-		Assert.notNull(iRobot.getScientist());
-		Assert.notNull(iRobot.getTitle());
-		Assert.notNull(iRobot.getDescription());
-		Assert.notNull(iRobot.getPrice());
+		Assert.notNull(iRobot, "not.allowed");
+		Assert.notNull(iRobot.getScientist(), "not.allowed");
+		Assert.notNull(iRobot.getTitle(), "not.allowed");
+		Assert.notNull(iRobot.getDescription(), "not.allowed");
+		Assert.notNull(iRobot.getPrice(), "not.allowed");
 
 		principal = this.utilityService.findByPrincipal();
 
 		Assert.isTrue(this.utilityService.checkAuthority(principal, "SCIENTIST"), "not.allowed");
 
 		result = this.iRobotRepository.save(iRobot);
-		Assert.notNull(result);
+		Assert.notNull(result, "not.allowed");
 
 		return result;
 	}
@@ -88,7 +88,7 @@ public class IRobotService {
 	public void delete(final IRobot iRobot) {
 		Actor principal;
 
-		Assert.notNull(iRobot);
+		Assert.notNull(iRobot, "not.allowed");
 		Assert.isTrue(iRobot.getId() != 0, "wrong.irobot.id");
 		
 		principal = this.utilityService.findByPrincipal();

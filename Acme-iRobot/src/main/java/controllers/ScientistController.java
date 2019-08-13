@@ -1,6 +1,7 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 import javax.servlet.http.HttpSession;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import services.ActorService;
 import services.IRobotService;
 import services.ScientistService;
+import services.SystemConfigurationService;
 import services.UtilityService;
 import domain.Actor;
 import domain.Scientist;
@@ -42,6 +44,9 @@ public class ScientistController extends AbstractController {
 
 	@Autowired
 	private UtilityService utilityService;
+	
+	@Autowired
+	private SystemConfigurationService systemConfigurationService;
 
 	/* Display */
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
@@ -136,7 +141,7 @@ public class ScientistController extends AbstractController {
 
 		try {
 			Assert.isTrue(this.utilityService.findByPrincipal().getId() == userForm.getId()
-					&& this.actorService.findOne(this.utilityService.findByPrincipal().getId()) != null);
+					&& this.actorService.findOne(this.utilityService.findByPrincipal().getId()) != null, "not.allowed");
 
 			Scientist scientist = this.scientistService.reconstruct(userForm, binding);
 
@@ -180,8 +185,11 @@ public class ScientistController extends AbstractController {
 			final String messageCode) {
 		ModelAndView result = new ModelAndView("scientist/register");
 
+		userRegistrationForm.setTermsAndConditions(false);
 		result.addObject("userRegistrationForm", userRegistrationForm);
 		result.addObject("errMsg", messageCode);
+		String[] aux = this.systemConfigurationService.findMySystemConfiguration().getMakers().split(",");
+		result.addObject("makers", Arrays.asList(aux));
 
 		return result;
 	}
@@ -198,6 +206,8 @@ public class ScientistController extends AbstractController {
 		result = new ModelAndView("scientist/edit");
 		result.addObject("userForm", userForm);
 		result.addObject("errMsg", messageCode);
+		String[] aux = this.systemConfigurationService.findMySystemConfiguration().getMakers().split(",");
+		result.addObject("makers", Arrays.asList(aux));
 
 		return result;
 	}

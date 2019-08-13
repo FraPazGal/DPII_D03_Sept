@@ -27,9 +27,9 @@
 			<br/>
 	
 			<form:hidden path="id" />
-			<acme:textbox code="irobot.title" path="title" size="80px" linebreak="true" /><br/> <br/>
+			<acme:textbox code="irobot.title" path="title" size="100px" /><br/> <br/>
 			<acme:textarea code="irobot.description" path="description" cols="71px" rows="4"/><br/> <br/>
-			<acme:textbox code="irobot.price" path="price" size="20px" linebreak="true" placeholder="price.placeholder"/><br/> <br/>
+			<acme:textbox code="irobot.price" path="price" size="20px" placeholder="price.placeholder"/><br/> <br/>
 		
 		</fieldset>
 		<br><br>

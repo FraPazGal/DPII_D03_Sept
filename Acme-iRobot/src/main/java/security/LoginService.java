@@ -35,15 +35,15 @@ public class LoginService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(final String username)
 			throws UsernameNotFoundException {
-		Assert.notNull(username);
+		Assert.notNull(username, "not.allowed");
 
 		UserDetails result;
 
 		result = this.userRepository.findByUsername(username);
-		Assert.notNull(result);
+		Assert.notNull(result, "not.allowed");
 		// WARNING: The following sentences prevent lazy initialisation
 		// problems!
-		Assert.notNull(result.getAuthorities());
+		Assert.notNull(result.getAuthorities(), "not.allowed");
 		result.getAuthorities().size();
 
 		return result;
@@ -63,14 +63,14 @@ public class LoginService implements UserDetailsService {
 		// republish your project, and start it over.
 
 		context = SecurityContextHolder.getContext();
-		Assert.notNull(context);
+		Assert.notNull(context, "not.allowed");
 		authentication = context.getAuthentication();
-		Assert.notNull(authentication);
+		Assert.notNull(authentication, "not.allowed");
 		principal = authentication.getPrincipal();
-		Assert.isTrue(principal instanceof UserAccount);
+		Assert.isTrue(principal instanceof UserAccount, "not.allowed");
 		result = (UserAccount) principal;
-		Assert.notNull(result);
-		Assert.isTrue(result.getId() != 0);
+		Assert.notNull(result, "not.allowed");
+		Assert.isTrue(result.getId() != 0, "not.allowed");
 
 		return result;
 	}
