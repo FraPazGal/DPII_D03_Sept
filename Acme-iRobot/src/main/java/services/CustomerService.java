@@ -163,7 +163,7 @@ public class CustomerService {
 					}
 					
 				} catch (Throwable oops) {
-					binding.rejectValue("cvv", "card.invalid");
+					binding.rejectValue("CVV", "card.invalid");
 				}
 				
 				CreditCard cc = new CreditCard();
