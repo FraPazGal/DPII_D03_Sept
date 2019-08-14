@@ -263,6 +263,15 @@ public class AdministratorService {
 					binding.rejectValue("username", "username.error");
 				}
 			}
+			
+			/* Terms&Conditions */
+			if (form.getTermsAndConditions() != null) {
+				try {
+					Assert.isTrue((form.getTermsAndConditions()));
+				} catch (final Throwable oops) {
+					binding.rejectValue("termsAndConditions", "terms.error");
+				}
+			}
 
 			/* Managing phone number */
 			if (form.getPhoneNumber() != null) {

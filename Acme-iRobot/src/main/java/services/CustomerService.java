@@ -64,7 +64,7 @@ public class CustomerService {
 		userAccount = new UserAccount();
 		res = new Customer();
 
-		auth.setAuthority(Authority.SCIENTIST);
+		auth.setAuthority(Authority.CUSTOMER);
 		authority.add(auth);
 		userAccount.setAuthorities(authority);
 		res.setUserAccount(userAccount);

@@ -146,6 +146,7 @@ public class AdministratorController extends AbstractController {
 	protected ModelAndView createRegisterModelAndView(final ActorRegistrationForm actorRegistrationForm, final String messageCode) {
 		ModelAndView result = new ModelAndView("administrator/register");
 
+		actorRegistrationForm.setTermsAndConditions(false);
 		result.addObject("actorRegistrationForm", actorRegistrationForm);
 		result.addObject("errMsg", messageCode);
 

@@ -13,6 +13,9 @@ public class ActorRegistrationForm {
 	private int id, version;
 	private String name, middleName, surname, photo, email, phoneNumber,
 			address, username, password, passwordConfirmation;
+	
+	/* Form attributes */
+	private Boolean	termsAndConditions;
 
 	/* Getters and setters */
 
@@ -123,6 +126,15 @@ public class ActorRegistrationForm {
 
 	public void setPasswordConfirmation(final String passwordConfirmation) {
 		this.passwordConfirmation = passwordConfirmation;
+	}
+	
+	@NotNull
+	public Boolean getTermsAndConditions() {
+		return this.termsAndConditions;
+	}
+
+	public void setTermsAndConditions(final Boolean termsAndConditions) {
+		this.termsAndConditions = termsAndConditions;
 	}
 
 }

@@ -57,7 +57,16 @@
 			<acme:textbox code="actor.phone" path="phoneNumber" size="40px"/><br/>
 			<acme:textbox code="actor.address" path="address" size="40px"/><br/>
 		</fieldset>
-		<br /><br>
+		<br />
+		
+		<fieldset>
+			<legend style="font-size: 21px">
+				<spring:message code="actor.terms" />
+			</legend>
+
+			<acme:checkbox code="actor.acceptTerms" path="termsAndConditions"/>
+		</fieldset>
+		<br />
 
 
 		<!-- Buttons -->
