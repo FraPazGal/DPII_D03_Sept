@@ -27,7 +27,14 @@
 					<jstl:out value='${config.banner}' />
 			</a></td>
 		</tr>
-
+		
+		<tr>
+			<td><strong> <spring:message code="config.makers" />
+					:
+			</strong></td>
+			<td><jstl:out value="${config.makers}" /></td>
+		</tr>
+		
 		<tr>
 			<td><strong> <spring:message code="config.countryCode" />
 					:

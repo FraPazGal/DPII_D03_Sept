@@ -10,21 +10,21 @@
 
 <security:authorize access="hasRole('ADMIN')">
 	<br>
+	<form:form action="config/admin/edit.do" modelAttribute="systemConfiguration" id="form">
 	<fieldset>
 		<legend style="font-size: 21px"> 
 			<spring:message code="sysconfig.edit" />
 		</legend><br>
 
-		<form:form action="config/admin/edit.do" modelAttribute="systemConfiguration" id="form">
-
 			<form:hidden path="id" />
 			<form:hidden path="version" />
 
-			<acme:textbox code="config.sysname" path="systemName" /><br>
-			<acme:textbox code="config.banner" path="banner" /><br>
-			<acme:textbox code="config.countryCode" path="countryCode" /><br>
-			<acme:textbox code="config.cache" path="timeResultsCached" /><br>
-			<acme:textbox code="config.maxResults" path="maxResults" /><br>
+			<acme:textbox code="config.sysname" path="systemName" size="20px"/><br>
+			<acme:textbox code="config.countryCode" path="countryCode" size="20px"/><br>
+			<acme:textbox code="config.cache" path="timeResultsCached" size="20px"/><br>
+			<acme:textbox code="config.maxResults" path="maxResults" size="20px"/><br>
+			<acme:textbox code="config.banner" path="banner" size="80px"/><br>
+			<acme:textbox code="config.makers" path="makers" size="80px"/><br>
 			
 			<strong><spring:message code="welcome.es" /></strong><br>
 			<input type="text" name="welcomeES" id="welcomeES" size="150%"
@@ -47,9 +47,10 @@
 			<br><br><form:errors cssClass="error" path="breachNotification" />
 
 			<form:errors cssClass="error" code="${message}" />
-		</form:form>
-	</fieldset>
-	<br>
-	<acme:submit code="mp.save" name="save" onclick="return checkEmpty('${pageContext.response.locale.language}')" />
-	<acme:cancel code="mp.cancel" url="config/admin/display.do" />
+
+			</fieldset>
+			<br>
+			<acme:submit code="mp.save" name="save"/>
+			<acme:cancel code="mp.cancel" url="config/admin/display.do" />
+	</form:form>
 </security:authorize>
