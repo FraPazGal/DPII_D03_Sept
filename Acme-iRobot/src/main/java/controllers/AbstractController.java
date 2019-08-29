@@ -34,13 +34,6 @@ public class AbstractController {
 		return urlBanner;
 	}
 	
-//	@ModelAttribute("breachNotification")
-//	public Map<String, String> getBreachNotification(final Model model) {
-//		final Map<String, String> res = this.systemConfigurationService.findBreachNotification();
-//
-//		return res;
-//	}
-	
 
 	// Panic handler ----------------------------------------------------------
 

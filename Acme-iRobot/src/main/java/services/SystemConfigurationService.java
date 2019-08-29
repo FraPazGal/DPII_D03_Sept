@@ -63,9 +63,7 @@ public class SystemConfigurationService {
 		}
 		systemConfiguration.setBreachNotification(this.reconstruct(breachES,breachEN));
 		
-		if(!binding.hasErrors()) {
-			this.validator.validate(systemConfiguration, binding);
-		}
+		this.validator.validate(systemConfiguration, binding);
 		
 		return systemConfiguration;
 	}

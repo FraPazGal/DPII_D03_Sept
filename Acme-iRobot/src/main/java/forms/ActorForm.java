@@ -10,7 +10,7 @@ public class ActorForm {
 	/* Attributes */
 
 	private int id, version;
-	private String name, middleName, surname, photo, email, phoneNumber,
+	private String name, surname, photo, email, phoneNumber,
 			address;
 
 	/* Getters and setters */
@@ -53,14 +53,6 @@ public class ActorForm {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getMiddleName() {
-		return middleName;
-	}
-
-	public void setMiddleName(String middleName) {
-		this.middleName = middleName;
 	}
 
 	@NotBlank

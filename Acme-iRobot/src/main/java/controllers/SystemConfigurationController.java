@@ -36,7 +36,7 @@ public class SystemConfigurationController extends AbstractController {
 			result.addObject("welcome", config.getWelcomeMessage());
 			result.addObject("breach", config.getBreachNotification());
 		} catch (Throwable oops) {
-			result.addObject("errMsg", oops.getMessage());
+			result = new ModelAndView("redirect:../welcome/index.do");
 		}
 		return result;
 	}
@@ -54,7 +54,7 @@ public class SystemConfigurationController extends AbstractController {
 			result.addObject("welcome", config.getWelcomeMessage());
 			result.addObject("breach", config.getBreachNotification());
 		} catch (Throwable oops) {
-			result.addObject("errMsg", oops.getMessage());
+			result = new ModelAndView("redirect:../welcome/index.do");
 		}
 		return result;
 	}
@@ -83,7 +83,7 @@ public class SystemConfigurationController extends AbstractController {
 				result = new ModelAndView("redirect:display.do");
 			}
 		} catch (Throwable oops) {
-			result.addObject("errMsg", oops.getMessage());
+			result = new ModelAndView("redirect:../welcome/index.do");
 		}
 		return result;
 	}

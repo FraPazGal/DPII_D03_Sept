@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.validation.Valid;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -22,6 +23,7 @@ public class User extends Actor {
 	/* Getters and setters */
 	
 	@NotBlank
+	@Pattern(regexp = "^ES\\d{8}[A-Z]{1}$")
 	public String getVATNumber() {
 		return VATNumber;
 	}

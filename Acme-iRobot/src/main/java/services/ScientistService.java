@@ -121,7 +121,7 @@ public class ScientistService {
 		res.setSurname(form.getSurname());
 		res.setPhoto(form.getPhoto());
 		res.setEmail(form.getEmail());
-		res.setPhoneNumber(form.getPhoneNumber());
+		res.setPhoneNumber(this.utilityService.addCountryCode(form.getPhoneNumber()));
 		res.setAddress(form.getAddress());
 		res.setVATNumber(form.getVATNumber());
 
@@ -143,90 +143,96 @@ public class ScientistService {
 
 		res.setUserAccount(userAccount);
 		
-		if(!binding.hasErrors()) {
+		/* CreditCard */
+		if(!form.getHolder().isEmpty() || !form.getNumber().isEmpty() || form.getCVV() != null ||
+				form.getExpirationMonth() != null || form.getExpirationYear() != null) {
 			
-			if(form.getHolder() != "" || form.getMake() != "" || form.getNumber() != "" || form.getCVV() != null ||
-					form.getExpirationMonth() != null || form.getExpirationYear() != null) {
+			try {
+				Assert.isTrue(form.getHolder() != "" && form.getMake() != "" && form.getNumber() != "" &&form.getCVV() != null &&
+						form.getExpirationMonth() != null && form.getExpirationYear() != null);
 				
 				try {
-					Assert.isTrue(form.getHolder() != "" && form.getMake() != "" && form.getNumber() != "" &&form.getCVV() != null &&
-							form.getExpirationMonth() != null && form.getExpirationYear() != null);
+					Assert.isTrue(this.utilityService.isValidCCMake(form.getMake()));
+				} catch (Throwable oops) {
+					binding.rejectValue("make", "invalid.make");
+				}
+				
+				try {
+					Assert.isTrue(!this.creditCardService.checkIfExpired(form.getExpirationMonth(), form.getExpirationYear()));
 					
-					try {
-						Assert.isTrue(!this.creditCardService.checkIfExpired(form.getExpirationMonth(), form.getExpirationYear()));
-					} catch (Throwable oops) {
-						binding.rejectValue("expirationMonth", "card.date.error");
-					}
+					CreditCard cc = new CreditCard();
+					
+					cc.setHolder(form.getHolder());
+					cc.setMake(form.getMake());
+					cc.setNumber(form.getNumber());
+					cc.setCVV(form.getCVV());
+					cc.setExpirationMonth(form.getExpirationMonth());
+					cc.setExpirationYear(form.getExpirationYear());
+					
+					res.setCreditCard(cc);
 					
 				} catch (Throwable oops) {
-					binding.rejectValue("CVV", "card.invalid");
+					binding.rejectValue("expirationYear", "card.date.error");
 				}
 				
-				CreditCard cc = new CreditCard();
-				
-				cc.setHolder(form.getHolder());
-				cc.setMake(form.getMake());
-				cc.setNumber(form.getNumber());
-				cc.setCVV(form.getCVV());
-				cc.setExpirationMonth(form.getExpirationMonth());
-				cc.setExpirationYear(form.getExpirationYear());
-				
-				res.setCreditCard(cc);
-			}
-			
-			/* Username */
-			if (form.getUsername() != null) {
-				try {
-					Assert.isTrue(this.utilityService.existsUsername(form.getUsername()));
-				} catch (final Throwable oops) {
-					binding.rejectValue("username", "username.error");
-				}
-			}
-			
-			/* Password confirmation */
-			if (form.getPassword() != null) {
-				try {
-					Assert.isTrue(form.getPassword().equals(form.getPasswordConfirmation()));
-				} catch (final Throwable oops) {
-					binding.rejectValue("passwordConfirmation", "password.confirmation.error");
-				}
-			}
-
-			/* Terms&Conditions */
-			if (form.getTermsAndConditions() != null) {
-				try {
-					Assert.isTrue((form.getTermsAndConditions()));
-				} catch (final Throwable oops) {
-					binding.rejectValue("termsAndConditions", "terms.error");
-				}
-			}
-			
-			/* Email */
-			if (form.getEmail() != null) {
-				try {
-					Assert.isTrue(this.utilityService.checkEmail(form.getEmail(),"SCIENTIST"));
-				} catch (Throwable oops) {
-					binding.rejectValue("email", "email.error");
-				}
-			}
-			
-			/* Managing phone number */
-			if (form.getPhoneNumber() != null) {
-				try {
-					final char[] phoneArray = form.getPhoneNumber().toCharArray();
-					if ((!form.getPhoneNumber().equals(null) && !form
-							.getPhoneNumber().equals("")))
-						if (phoneArray[0] != '+'
-								&& Character.isDigit(phoneArray[0])) {
-							final String sc = this.systemConfigurationService
-									.findMySystemConfiguration().getCountryCode();
-							form.setPhoneNumber(sc + " " + form.getPhoneNumber());
-						}
-				} catch (Throwable oops) {
-					binding.rejectValue("phoneNumber", "phone.error");
-				}
+			} catch (Throwable oops) {
+				binding.rejectValue("CVV", "card.invalid");
 			}
 		}
+			
+		/* Username */
+		if (form.getUsername() != null) {
+			try {
+				Assert.isTrue(this.utilityService.existsUsername(form.getUsername()));
+			} catch (final Throwable oops) {
+				binding.rejectValue("username", "username.error");
+			}
+		}
+		
+		/* Password confirmation */
+		if (!form.getPassword().isEmpty() && !form.getPasswordConfirmation().isEmpty()) {
+			try {
+				Assert.isTrue(form.getPassword().equals(form.getPasswordConfirmation()));
+			} catch (final Throwable oops) {
+				binding.rejectValue("passwordConfirmation", "password.confirmation.error");
+			}
+		}
+
+		/* Terms&Conditions */
+		if (form.getTermsAndConditions() != null) {
+			try {
+				Assert.isTrue((form.getTermsAndConditions()));
+			} catch (final Throwable oops) {
+				binding.rejectValue("termsAndConditions", "terms.error");
+			}
+		}
+			
+		/* Email */
+		if (!form.getEmail().isEmpty()) {
+			try {
+				Assert.isTrue(this.utilityService.checkEmail(form.getEmail(),"SCIENTIST"));
+			} catch (Throwable oops) {
+				binding.rejectValue("email", "email.error");
+			}
+		}
+		
+		/* Managing phone number */
+		if (form.getPhoneNumber() != null) {
+			try {
+				final char[] phoneArray = form.getPhoneNumber().toCharArray();
+				if ((!form.getPhoneNumber().equals(null) && !form
+						.getPhoneNumber().equals("")))
+					if (phoneArray[0] != '+'
+							&& Character.isDigit(phoneArray[0])) {
+						final String sc = this.systemConfigurationService
+								.findMySystemConfiguration().getCountryCode();
+						form.setPhoneNumber(sc + " " + form.getPhoneNumber());
+					}
+			} catch (Throwable oops) {
+				binding.rejectValue("phoneNumber", "phone.error");
+			}
+		}
+		
 		return res;
 	}
 
@@ -243,67 +249,73 @@ public class ScientistService {
 		res.setSurname(form.getSurname());
 		res.setPhoto(form.getPhoto());
 		res.setEmail(form.getEmail());
-		res.setPhoneNumber(form.getPhoneNumber());
+		res.setPhoneNumber(this.utilityService.addCountryCode(form.getPhoneNumber()));
 		res.setAddress(form.getAddress());
 		res.setVATNumber(form.getVATNumber());
 		
-		if(!binding.hasErrors()) {
+		/* CreditCard */
+		if(!form.getHolder().isEmpty() || !form.getNumber().isEmpty() || form.getCVV() != null ||
+				form.getExpirationMonth() != null || form.getExpirationYear() != null) {
 			
-			if(form.getHolder() != "" || form.getMake() != "" || form.getNumber() != "" || form.getCVV() != null ||
-					form.getExpirationMonth() != null || form.getExpirationYear() != null) {
+			try {
+				Assert.isTrue(form.getHolder() != "" && form.getMake() != "" && form.getNumber() != "" &&form.getCVV() != null &&
+						form.getExpirationMonth() != null && form.getExpirationYear() != null);
 				
 				try {
-					Assert.isTrue(form.getHolder() != "" && form.getMake() != "" && form.getNumber() != "" &&form.getCVV() != null &&
-							form.getExpirationMonth() != null && form.getExpirationYear() != null);
+					Assert.isTrue(this.utilityService.isValidCCMake(form.getMake()));
+				} catch (Throwable oops) {
+					binding.rejectValue("make", "invalid.make");
+				}
+				
+				try {
+					Assert.isTrue(!this.creditCardService.checkIfExpired(form.getExpirationMonth(), form.getExpirationYear()));
 					
-					try {
-						Assert.isTrue(!this.creditCardService.checkIfExpired(form.getExpirationMonth(), form.getExpirationYear()));
-					} catch (Throwable oops) {
-						binding.rejectValue("expirationMonth", "card.date.error");
-					}
+					CreditCard cc = new CreditCard();
+					
+					cc.setHolder(form.getHolder());
+					cc.setMake(form.getMake());
+					cc.setNumber(form.getNumber());
+					cc.setCVV(form.getCVV());
+					cc.setExpirationMonth(form.getExpirationMonth());
+					cc.setExpirationYear(form.getExpirationYear());
+					
+					res.setCreditCard(cc);
 					
 				} catch (Throwable oops) {
-					binding.rejectValue("CVV", "card.invalid");
+					binding.rejectValue("expirationYear", "card.date.error");
 				}
 				
-				CreditCard cc = new CreditCard();
-				
-				cc.setHolder(form.getHolder());
-				cc.setMake(form.getMake());
-				cc.setNumber(form.getNumber());
-				cc.setCVV(form.getCVV());
-				cc.setExpirationMonth(form.getExpirationMonth());
-				cc.setExpirationYear(form.getExpirationYear());
-				
-				res.setCreditCard(cc);
-			}
-			
-			/* Email */
-			if (form.getEmail() != null) {
-				try {
-					Assert.isTrue(this.utilityService.checkEmail(form.getEmail(),"SCIENTIST"));
-				} catch (Throwable oops) {
-					binding.rejectValue("email", "email.error");
-				}
-			}
-			
-			/* Managing phone number */
-			if (form.getPhoneNumber() != null) {
-				try {
-					final char[] phoneArray = form.getPhoneNumber().toCharArray();
-					if ((!form.getPhoneNumber().equals(null) && !form
-							.getPhoneNumber().equals("")))
-						if (phoneArray[0] != '+'
-								&& Character.isDigit(phoneArray[0])) {
-							final String sc = this.systemConfigurationService
-									.findMySystemConfiguration().getCountryCode();
-							form.setPhoneNumber(sc + " " + form.getPhoneNumber());
-						}
-				} catch (Throwable oops) {
-					binding.rejectValue("phoneNumber", "phone.error");
-				}
+			} catch (Throwable oops) {
+				binding.rejectValue("CVV", "card.invalid");
 			}
 		}
+			
+		/* Email */
+		if (!form.getEmail().isEmpty()) {
+			try {
+				Assert.isTrue(this.utilityService.checkEmail(form.getEmail(),"SCIENTIST"));
+			} catch (Throwable oops) {
+				binding.rejectValue("email", "email.error");
+			}
+		}
+		
+		/* Managing phone number */
+		if (form.getPhoneNumber() != null) {
+			try {
+				final char[] phoneArray = form.getPhoneNumber().toCharArray();
+				if ((!form.getPhoneNumber().equals(null) && !form
+						.getPhoneNumber().equals("")))
+					if (phoneArray[0] != '+'
+							&& Character.isDigit(phoneArray[0])) {
+						final String sc = this.systemConfigurationService
+								.findMySystemConfiguration().getCountryCode();
+						form.setPhoneNumber(sc + " " + form.getPhoneNumber());
+					}
+			} catch (Throwable oops) {
+				binding.rejectValue("phoneNumber", "phone.error");
+			}
+		}
+		
 		return res;
 	}
 

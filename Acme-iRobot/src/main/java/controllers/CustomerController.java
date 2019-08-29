@@ -56,7 +56,7 @@ public class CustomerController extends AbstractController {
 			
 			result.addObject("customer", customer);
 		} catch (final Throwable oops) {
-			result.addObject("errMsg", oops.getMessage());
+			result = new ModelAndView("redirect:../welcome/index.do");
 		}
 
 		return result;
@@ -73,7 +73,7 @@ public class CustomerController extends AbstractController {
 	/* Save Registration */
 	@RequestMapping(value = "/register", method = RequestMethod.POST, params = "save")
 	public ModelAndView register(@Valid final UserRegistrationForm userRegistrationForm, final BindingResult binding) {
-		ModelAndView result = new ModelAndView("redirect:/");
+		ModelAndView result = new ModelAndView("redirect:../welcome/index.do");
 		
 		try {
 			Customer customer = this.customerService.reconstruct(userRegistrationForm, binding);
@@ -94,7 +94,8 @@ public class CustomerController extends AbstractController {
 	/* Edit */
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView editAuthor() {
-		ModelAndView result = new ModelAndView("customer/display");;
+		ModelAndView result;
+		
 		try {
 			Actor principal = this.utilityService.findByPrincipal();
 			Assert.isTrue(this.utilityService.checkAuthority(principal, "CUSTOMER"), "not.allowed");
@@ -102,8 +103,9 @@ public class CustomerController extends AbstractController {
 			final UserForm userForm = new UserForm((User)principal);
 			
 			result = this.createEditModelAndView(userForm);
+			
 		} catch (Throwable oops) {
-			result.addObject("errMsg", oops.getMessage());
+			result = new ModelAndView("redirect:../welcome/index.do");
 		}
 		return result;
 	}
@@ -124,6 +126,7 @@ public class CustomerController extends AbstractController {
 			} else {
 				this.customerService.save(customer);
 			}
+			
 		} catch (Throwable oops) {
 			result = this.createEditModelAndView(userForm, oops.getMessage());
 		}
@@ -132,20 +135,18 @@ public class CustomerController extends AbstractController {
 	
 	/* Delete */
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
-	public ModelAndView deleteRookie(final UserForm userForm, final BindingResult binding, final HttpSession session) {
-		
+	public ModelAndView delete(final UserForm userForm, final BindingResult binding, final HttpSession session) {
 		ModelAndView result = new ModelAndView("redirect:/welcome/index.do");
-		Customer customer = this.customerService.findOne(userForm.getId());
+		
+		try {
+			Customer customer = this.customerService.findOne(userForm.getId());
 
-		if (binding.hasErrors())
-			result = this.createEditModelAndView(userForm);
-		else
-			try {
-				this.customerService.delete(customer);
-				session.invalidate();
-			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(userForm, oops.getMessage());
-			}
+			this.customerService.delete(customer);
+			session.invalidate();
+			
+		} catch (Throwable oops) {
+			result = this.createEditModelAndView(userForm, oops.getMessage());
+		}
 		return result;
 	}
 

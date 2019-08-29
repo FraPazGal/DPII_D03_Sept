@@ -34,6 +34,8 @@
 										code="master.page.irobot.list" /></a></li>
 										
 						<security:authorize access="hasRole('SCIENTIST')">
+							<li><a href="iRobot/list.do?range=mineND"><spring:message
+										code="master.page.irobot.list.scientist" /></a></li>
 							<li><a href="iRobot/create.do"><spring:message
 										code="master.page.irobot.new" /></a></li>
 						</security:authorize>

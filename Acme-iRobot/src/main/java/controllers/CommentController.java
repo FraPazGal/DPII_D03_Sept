@@ -45,10 +45,9 @@ public class CommentController extends AbstractController {
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(Comment comment, BindingResult binding) {
 		ModelAndView result = new ModelAndView("comment/create");
-		Comment toSave;
 
 		try {
-			toSave = this.commentService.reconstruct(comment, binding);
+			Comment toSave = this.commentService.reconstruct(comment, binding);
 
 			if (binding.hasErrors()) {
 				result.addObject("comment", comment);
@@ -58,7 +57,7 @@ public class CommentController extends AbstractController {
 				result = new ModelAndView("redirect:../iRobot/display.do?iRobotId=" + toSave.getIRobot().getId());
 			}
 		} catch (Throwable oops) {
-			result = new ModelAndView("welcome/index");
+			result = new ModelAndView("redirect:../welcome/index.do");
 		}
 		return result;
 	}

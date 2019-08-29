@@ -14,10 +14,12 @@
 		<put-attribute name="title" value="Resumen de Compra" />
 		<put-attribute name="body" value="/views/purchase/display.jsp" />
 	</definition>
+	
 	<definition name="purchase/list" extends="master.page">
 		<put-attribute name="title" value="Listado de compras" />
 		<put-attribute name="body" value="/views/purchase/list.jsp" />
 	</definition>
+	
 	<definition name="purchase/edit" extends="master.page">
 		<put-attribute name="title" value="Compra" />
 		<put-attribute name="body" value="/views/purchase/edit.jsp" />

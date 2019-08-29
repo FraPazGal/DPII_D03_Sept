@@ -30,19 +30,18 @@ public class DashboardController extends AbstractController{
 	/* Display */
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
 	public ModelAndView display() {
-		Actor principal;
 		ModelAndView result = new ModelAndView("administrator/statistics");;
 		
 		try {
-			principal = this.utilityService.findByPrincipal();
+			Actor principal = this.utilityService.findByPrincipal();
 			Assert.isTrue(this.utilityService.checkAuthority(principal, "ADMIN"), "not.allowed");
 			
-			Double [] statsIRobotsPerScientist = this.dashboardService.StatsIRobotsPerScientist();
-			List<Scientist> top10ScientistByPurchases = this.dashboardService.Top10ScientistByPurchases();
-			List<IRobot> top10BestSellingIRobots = this.dashboardService.Top10BestSellingIRobots();
-			List<IRobot> top10IRobotByFinders = this.dashboardService.Top10IRobotByFinders();
-			List<IRobot> bottom10IRobotByFinders = this.dashboardService.Bottom10IRobotByFinders();
-			Double averageResultsPerFinder = this.dashboardService.AverageResultsPerFinder();
+			Double [] statsIRobotsPerScientist = this.dashboardService.statsIRobotsPerScientist();
+			List<Scientist> top10ScientistByPurchases = this.dashboardService.top10ScientistByPurchases();
+			List<IRobot> top10BestSellingIRobots = this.dashboardService.top10BestSellingIRobots();
+			List<IRobot> top10IRobotByFinders = this.dashboardService.top10IRobotByFinders();
+			List<IRobot> bottom10IRobotByFinders = this.dashboardService.bottom10IRobotByFinders();
+			Double averageResultsPerFinder = this.dashboardService.averageResultsPerFinder();
 			
 			result.addObject("statsIRobotsPerScientist",statsIRobotsPerScientist);
 			result.addObject("top10ScientistByPurchases",top10ScientistByPurchases);
@@ -52,7 +51,7 @@ public class DashboardController extends AbstractController{
 			result.addObject("averageResultsPerFinder",averageResultsPerFinder);
 			
 		} catch (Throwable oops) {
-			result.addObject("errMsg", oops.getMessage());
+			result = new ModelAndView("redirect:../welcome/index.do");
 		}
 		return result;
 	}

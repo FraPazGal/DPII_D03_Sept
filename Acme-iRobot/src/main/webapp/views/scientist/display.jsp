@@ -8,12 +8,11 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<security:authorize access="permitAll">
 <jstl:choose>
 	<jstl:when test="${isPrincipal}">
 		<!-- Actor Attributes -->
 		<h1><spring:message	code="actor.view" /></h1>
-		<fieldset style="width: 35%">
+		<fieldset style="width: 40%">
 			<legend style="font-size: 21px">
 				<spring:message code="actor.personalData" />
 			</legend>
@@ -150,40 +149,39 @@
 	</jstl:otherwise>
 </jstl:choose>
 
-	<jstl:if test="${not empty iRobots}">
-		<h2>
-			<strong><spring:message code="irobot.list" /></strong>
-		</h2>
-	
-		<display:table style="width: 80%" class="displaytag"
-			name="iRobots" pagesize="5"
-			requestURI="scientist/display.do?scientistId=${scientist.id}"
-			id="irobot">
-	
-			<display:column titleKey="irobot.title" sortable="true">
-				<jstl:out value="${irobot.title}" />
-			</display:column>
-	
-			<display:column titleKey="irobot.ticker" sortable="true">
-				<jstl:out value="${irobot.ticker}" />
-			</display:column>
-			
-			<display:column titleKey="irobot.price" sortable="true">
-				<jstl:out value="${irobot.price}" /> &#8364;
-			</display:column>
-	
-			<display:column>
-				<a href="iRobot/display.do?iRobotId=${irobot.id}"> <spring:message
-						code="mp.display" />
-				</a>
-			</display:column>
-	
-		</display:table>
-	</jstl:if>
+<jstl:if test="${not empty iRobots}">
+	<h2>
+		<strong><spring:message code="irobot.list" /></strong>
+	</h2>
 
-	<jstl:if test="${isPrincipal }">
-		<input type="button" name="edit" value="<spring:message code="mp.edit" />" onclick="javascript: relativeRedir('/scientist/edit.do')" />&nbsp;
-	</jstl:if>
-	<input type="button" name="back" value="<spring:message code="mp.back" />" onclick="window.history.back()" />
-	<br>
-</security:authorize>
+	<display:table style="width: 80%" class="displaytag"
+		name="iRobots" pagesize="5"
+		requestURI="scientist/display.do?scientistId=${scientist.id}"
+		id="irobot">
+
+		<display:column titleKey="irobot.title" sortable="true">
+			<jstl:out value="${irobot.title}" />
+		</display:column>
+
+		<display:column titleKey="irobot.ticker" sortable="true">
+			<jstl:out value="${irobot.ticker}" />
+		</display:column>
+		
+		<display:column titleKey="irobot.price" sortable="true">
+			<jstl:out value="${irobot.price}" /> &#8364;
+		</display:column>
+
+		<display:column>
+			<a href="iRobot/display.do?iRobotId=${irobot.id}"> <spring:message
+					code="mp.display" />
+			</a>
+		</display:column>
+
+	</display:table>
+</jstl:if>
+
+<jstl:if test="${isPrincipal }">
+	<input type="button" name="edit" value="<spring:message code="mp.edit" />" onclick="javascript: relativeRedir('/scientist/edit.do')" />&nbsp;
+</jstl:if>
+<input type="button" name="back" value="<spring:message code="mp.back" />" onclick="javascript: relativeRedir('/scientist/list.do')" />&nbsp;
+<br>

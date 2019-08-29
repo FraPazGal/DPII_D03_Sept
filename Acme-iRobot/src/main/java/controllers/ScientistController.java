@@ -64,10 +64,10 @@ public class ScientistController extends AbstractController {
 			}
 			Assert.isTrue(this.utilityService.checkAuthority(scientist, "SCIENTIST"), "not.allowed");
 			result.addObject("scientist", scientist);
-			result.addObject("iRobots", this.iRobotService.findIRobotsNotDecomissionedAndMine(scientist.getId()));
+			result.addObject("iRobots", this.iRobotService.findIRobotsNotDecommissionedAndMine(scientist.getId()));
 			result.addObject("isPrincipal", isPrincipal);
 		} catch (final Throwable oops) {
-			result.addObject("errMsg", oops.getMessage());
+			result = new ModelAndView("redirect:../welcome/index.do");
 		}
 
 		return result;
@@ -85,7 +85,7 @@ public class ScientistController extends AbstractController {
 			result.addObject("scientists", scientists);
 
 		} catch (final Throwable oops) {
-			result.addObject("errMsg", oops.getMessage());
+			result = new ModelAndView("redirect:../welcome/index.do");
 		}
 		return result;
 	}
@@ -129,7 +129,7 @@ public class ScientistController extends AbstractController {
 			
 			result = this.createEditModelAndView(userForm);
 		} catch (Throwable oops) {
-			result.addObject("errMsg", oops.getMessage());
+			result = new ModelAndView("redirect:../welcome/index.do");
 		}
 		return result;
 	}
@@ -158,20 +158,19 @@ public class ScientistController extends AbstractController {
 	
 	/* Delete */
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
-	public ModelAndView deleteRookie(final UserForm userForm, final BindingResult binding, final HttpSession session) {
-		
+	public ModelAndView delete(final UserForm userForm, final BindingResult binding, final HttpSession session) {
 		ModelAndView result = new ModelAndView("redirect:/welcome/index.do");
-		Scientist scientist = this.scientistService.findOne(userForm.getId());
+		
+		try {
+			Scientist scientist = this.scientistService.findOne(userForm.getId());
 
-		if (binding.hasErrors())
-			result = this.createEditModelAndView(userForm);
-		else
-			try {
-				this.scientistService.delete(scientist);
-				session.invalidate();
-			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(userForm, oops.getMessage());
-			}
+			this.scientistService.delete(scientist);
+			session.invalidate();
+			
+		} catch (Throwable oops) {
+			result = this.createEditModelAndView(userForm, oops.getMessage());
+		}
+		
 		return result;
 	}
 
@@ -199,11 +198,9 @@ public class ScientistController extends AbstractController {
 		return this.createEditModelAndView(userForm, null);
 	}
 
-	protected ModelAndView createEditModelAndView(
-			final UserForm userForm, final String messageCode) {
-		ModelAndView result;
+	protected ModelAndView createEditModelAndView(final UserForm userForm, final String messageCode) {
+		ModelAndView result = new ModelAndView("scientist/edit");
 
-		result = new ModelAndView("scientist/edit");
 		result.addObject("userForm", userForm);
 		result.addObject("errMsg", messageCode);
 		String[] aux = this.systemConfigurationService.findMySystemConfiguration().getMakers().split(",");

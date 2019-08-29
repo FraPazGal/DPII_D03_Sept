@@ -92,7 +92,7 @@ public class CommentService {
 	}
 	
 	public Comment createWithIRobot(IRobot iRobot) {
-		Assert.isTrue(!iRobot.getIsDeleted() && !iRobot.getIsDecomissioned(), "wrong.id");
+		Assert.isTrue(!iRobot.getIsDeleted() && !iRobot.getIsDecommissioned(), "wrong.id");
 		
 		Comment result = this.create();
 		result.setIRobot(iRobot);

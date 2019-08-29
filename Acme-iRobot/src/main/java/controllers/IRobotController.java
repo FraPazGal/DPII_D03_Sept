@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.CommentService;
 import services.IRobotService;
+import services.ScientistService;
 import services.UtilityService;
 import domain.Actor;
 import domain.Comment;
@@ -35,6 +36,9 @@ public class IRobotController extends AbstractController {
 
 	@Autowired
 	private CommentService commentService;
+	
+	@Autowired
+	private ScientistService scientistService;
 
 	/* Display */
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
@@ -52,6 +56,7 @@ public class IRobotController extends AbstractController {
 				principal = this.utilityService.findByPrincipal();
 				if (this.iRobotService.findOne(iRobotId).getScientist().equals(principal)) {
 					iRobot = this.iRobotService.findOne(iRobotId);
+					Assert.isTrue(!iRobot.getIsDeleted(), "not.allowed");
 					isPrincipal = true;
 				} else {
 					iRobot = this.iRobotService.findOneToDisplay(iRobotId);
@@ -66,7 +71,7 @@ public class IRobotController extends AbstractController {
 			result.addObject("requestURI", "iRobot/display.do?iRobotId=" + iRobotId);
 			
 		} catch (final Throwable oops) {
-			result = new ModelAndView("redirect:/");
+			result = new ModelAndView("redirect:../welcome/index.do");
 		}
 		return result;
 	}
@@ -89,30 +94,35 @@ public class IRobotController extends AbstractController {
 					listConf = true;
 			} catch (final Throwable oops) {}
 			if(range == null && scientistId == null) {
-				iRobots = this.iRobotService.findIRobotsNotDecomissioned();
+				iRobots = this.iRobotService.findIRobotsNotDecommissioned();
 			} else if (range != null){
 				Assert.isTrue(this.utilityService.checkAuthority(principal, "SCIENTIST"), "not.allowed");
 				isPrincipal = true;
 				
 				switch (range) {
 				case "mineND":
-					iRobots = this.iRobotService.findIRobotsNotDecomissionedAndMine(principal.getId());
+					iRobots = this.iRobotService.findIRobotsNotDecommissionedAndMine(principal.getId());
 					break;
 
 				case "mineD":
-					iRobots = this.iRobotService.findIRobotsDecomissionedAndMine(principal.getId());
+					iRobots = this.iRobotService.findIRobotsDecommissionedAndMine(principal.getId());
 					break;
 				}
 			} else if (scientistId != null) {
-				iRobots = this.iRobotService.findIRobotsNotDecomissionedAndMine(scientistId);
+				iRobots = this.iRobotService.findIRobotsNotDecommissionedAndMine(scientistId);
+				Scientist scientist = this.scientistService.findOne(scientistId);
 				result.addObject("listSpc", true);
+				result.addObject("scientistName", scientist.getName() + " " + scientist.getSurname());
+			}else {
+				Assert.notEmpty(iRobots);
 			}
+			
 			result.addObject("iRobots", iRobots);
 			result.addObject("listConf", listConf);
 			result.addObject("isPrincipal", isPrincipal);
 			result.addObject("range", range);
 		} catch (final Throwable oops) {
-			result.addObject("errMsg", oops.getMessage());
+			result = new ModelAndView("redirect:../welcome/index.do");
 		}
 		return result;
 	}
@@ -120,14 +130,14 @@ public class IRobotController extends AbstractController {
 	/* Create */
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
-		ModelAndView result = new ModelAndView("iRobot/list");
+		ModelAndView result;
 		try {
 			final IRobot iRobot = this.iRobotService.create();
 
 			result = this.createEditModelAndView(iRobot);
 
 		} catch (final Throwable oops) {
-			result.addObject("errMsg", oops.getMessage());
+			result = new ModelAndView("redirect:../welcome/index.do");
 		}
 		return result;
 	}
@@ -135,21 +145,18 @@ public class IRobotController extends AbstractController {
 	/* Edit */
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam final int iRobotId) {
-		ModelAndView result = new ModelAndView("iRobot/list");
-		IRobot iRobot;
-		Actor principal = null;
-
+		ModelAndView result;
 		try {
-			iRobot = this.iRobotService.findOne(iRobotId);
+			IRobot iRobot = this.iRobotService.findOne(iRobotId);
 			Assert.notNull(iRobot, "not.allowed");
 
-			principal = this.utilityService.findByPrincipal();
+			Actor principal = this.utilityService.findByPrincipal();
 			Assert.isTrue(iRobot.getScientist().equals((Scientist) principal), "not.allowed");
 
 			result = this.createEditModelAndView(iRobot);
 
 		} catch (final Throwable oops) {
-			result.addObject("errMsg", oops.getMessage());
+			result = new ModelAndView("redirect:../welcome/index.do");
 		}
 		return result;
 	}
@@ -179,25 +186,23 @@ public class IRobotController extends AbstractController {
 		return result;
 	}
 	
-	/* (De)Comission or delete an iRobot */
+	/* (De)Commission or delete an iRobot */
 	@RequestMapping(value = "/action", method = RequestMethod.GET)
 	public ModelAndView actionsEnrolments(@RequestParam final String action, @RequestParam final int iRobotId) {
-		ModelAndView result = new ModelAndView("iRobot/list");
-		Actor principal;
-		IRobot iRobot;
+		ModelAndView result = new ModelAndView("redirect:/iRobot/list.do");
 
 		try {
-			principal = this.utilityService.findByPrincipal();
-			iRobot = this.iRobotService.findOne(iRobotId);
+			Actor principal = this.utilityService.findByPrincipal();
+			IRobot iRobot = this.iRobotService.findOne(iRobotId);
 			Assert.isTrue(iRobot.getScientist().equals((Scientist) principal), "not.allowed");
 
 			if (action.equals("activate")) {
 				this.iRobotService.activate(iRobot);
 				result = new ModelAndView("redirect:/iRobot/list.do?range=mineND");
 
-			} else if (action.equals("decomission")) {
+			} else if (action.equals("decommission")) {
 
-				this.iRobotService.decomission(iRobot);
+				this.iRobotService.decommission(iRobot);
 				result = new ModelAndView("redirect:/iRobot/list.do?range=mineD");
 				
 			} else if(action.equals("delete")) {
@@ -205,7 +210,7 @@ public class IRobotController extends AbstractController {
 				result = new ModelAndView("redirect:/iRobot/list.do?range=mineD");
 			}
 		} catch (final Throwable oops) {
-			result.addObject("errMsg", oops.getMessage());
+			result = new ModelAndView("redirect:../welcome/index.do");
 		}
 		return result;
 	}
@@ -219,8 +224,7 @@ public class IRobotController extends AbstractController {
 			this.iRobotService.delete(iRobot);
 
 		} catch (final Throwable oops) {
-			result = new ModelAndView("iRobot/list");
-			result.addObject("errMsg", oops.getMessage());
+			result = new ModelAndView("redirect:../welcome/index.do");
 		}
 		return result;
 	}

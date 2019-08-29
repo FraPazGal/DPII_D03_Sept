@@ -108,7 +108,7 @@ public class PurchaseService {
 	public Purchase reconstruct(PurchaseForm form, BindingResult binding) {
 		Purchase purchase = this.create();
 
-		Assert.isTrue(!form.getIRobot().getIsDecomissioned() && !form.getIRobot().getIsDeleted(), "wrong.irobot.id");
+		Assert.isTrue(!form.getIRobot().getIsDecommissioned() && !form.getIRobot().getIsDeleted(), "wrong.irobot.id");
 		purchase.setiRobot(form.getIRobot());
 		purchase.setPrice(form.getIRobot().getPrice());
 
@@ -124,24 +124,29 @@ public class PurchaseService {
 
 		this.validator.validate(creditCard, binding);
 		
+		/* Credit card */
+		if (creditCard.getExpirationMonth() != null
+				&& creditCard.getExpirationYear() != null) {
+
+			try {
+				Assert.isTrue(
+						!this.creditCardService.checkIfExpired(
+								creditCard.getExpirationMonth(),
+								creditCard.getExpirationYear()));
+			} catch (Throwable oops) {
+				binding.rejectValue("expirationYear", "card.date.error");
+			}
+		}
+		
+		try {
+			Assert.isTrue(this.utilityService.isValidCCMake(form.getMake()));
+		} catch (Throwable oops) {
+			binding.rejectValue("make", "invalid.make");
+		}
+		
 		if (!binding.hasErrors()) {
-			/* Credit card */
-			if (creditCard.getExpirationMonth() != null
-					&& creditCard.getExpirationYear() != null) {
 
-				try {
-					Assert.isTrue(
-							!this.creditCardService.checkIfExpired(
-									creditCard.getExpirationMonth(),
-									creditCard.getExpirationYear()));
-				} catch (Throwable oops) {
-					binding.rejectValue("expirationMonth", "card.date.error");
-				}
-			}
-			if (!binding.hasErrors()) {
-
-				purchase.setCreditCard(creditCard);
-			}
+			purchase.setCreditCard(creditCard);
 		}
 
 		this.validator.validate(purchase, binding);
@@ -153,7 +158,7 @@ public class PurchaseService {
 		Purchase result = this.create();
 		User principal = this.utilityService.findUserByPrincipal();
 		
-		Assert.isTrue(!form.getIRobot().getIsDecomissioned() && !form.getIRobot().getIsDeleted(), "wrong.irobot.id");
+		Assert.isTrue(!form.getIRobot().getIsDecommissioned() && !form.getIRobot().getIsDeleted(), "wrong.irobot.id");
 		Assert.notNull(principal.getCreditCard(), "no.creditcard");
 		
 		result.setiRobot(form.getIRobot());

@@ -29,7 +29,7 @@
 								code="irobot.irobot.list.active" /></a></li>
 								
 					<li><a href="iRobot/list.do?range=mineD"><spring:message
-								code="irobot.irobot.list.decomissioned" /></a></li>
+								code="irobot.irobot.list.decommissioned" /></a></li>
 
 				</ul></li>
 				

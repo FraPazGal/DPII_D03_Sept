@@ -38,8 +38,8 @@ public class SystemConfiguration extends DomainEntity {
 		this.systemName = systemName;
 	}
 
-	@NotBlank
 	@URL
+	@NotBlank
 	public String getBanner() {
 		return banner;
 	}

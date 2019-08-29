@@ -1,5 +1,7 @@
 package forms;
 
+import javax.validation.constraints.Pattern;
+
 import org.hibernate.validator.constraints.CreditCardNumber;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
@@ -119,6 +121,7 @@ public class UserForm {
 	}
 	
 	@NotBlank
+	@Pattern(regexp = "^ES\\d{8}[A-Z]{1}$")
 	public String getVATNumber() {
 		return VATNumber;
 	}

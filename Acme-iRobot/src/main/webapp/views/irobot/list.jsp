@@ -10,13 +10,16 @@
 <%@taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 
-<security:authorize access="permitAll">
+
 <jstl:choose>
-	<jstl:when test="${range eq null }">
+	<jstl:when test="${range eq null and scientistName eq null}">
 		<h1><spring:message	code="irobot.list" /></h1>
 	</jstl:when>
+	<jstl:when test="${range eq null and scientistName ne null}">
+		<h1><spring:message	code="irobot.scientist.list" /><jstl:out value="${scientistName}" /></h1>
+	</jstl:when>
 	<jstl:when test="${range == 'mineD' }">
-		<h1><spring:message	code="irobot.irobot.list.decomissioned" /></h1>
+		<h1><spring:message	code="irobot.irobot.list.decommissioned" /></h1>
 	</jstl:when>
 	<jstl:otherwise>
 		<h1><spring:message	code="irobot.irobot.list.active" /></h1>
@@ -41,15 +44,15 @@
 				<jstl:out value="${irobot.price}" /> &#8364;
 			</display:column>
 			
-			<jstl:if test="${irobot.isDecomissioned eq true}">
-				<spring:message var="decomissioned" code='irobot.isDecomissioned.true' />
+			<jstl:if test="${irobot.isDecommissioned eq true}">
+				<spring:message var="decommissioned" code='irobot.isDecommissioned.true' />
 			</jstl:if>
-			<jstl:if test="${irobot.isDecomissioned eq false}">
-				<spring:message var="decomissioned" code='irobot.isDecomissioned.false' />
+			<jstl:if test="${irobot.isDecommissioned eq false}">
+				<spring:message var="decommissioned" code='irobot.isDecommissioned.false' />
 			</jstl:if>
 			
-			<display:column titleKey="irobot.isDecomissioned" sortable="true">
-				<jstl:out value="${decomissioned}" />
+			<display:column titleKey="irobot.isDecommissioned" sortable="true">
+				<jstl:out value="${decommissioned}" />
 			</display:column>
 			
 			<display:column>
@@ -71,22 +74,22 @@
 			</display:column>
 			
 			<display:column>
-				<jstl:if test="${irobot.isDecomissioned}">
-					<a id="decomission"
+				<jstl:if test="${irobot.isDecommissioned}">
+					<a id="decommission"
 						href="iRobot/action.do?action=activate&iRobotId=${irobot.id}">
 						<spring:message code="irobot.activate" />
 					</a>
 				</jstl:if>
-				<jstl:if test="${!irobot.isDecomissioned}">
-					<a id="decomission"
-						href="iRobot/action.do?action=decomission&iRobotId=${irobot.id}">
-						<spring:message code="irobot.decomission" />
+				<jstl:if test="${!irobot.isDecommissioned}">
+					<a id="decommission"
+						href="iRobot/action.do?action=decommission&iRobotId=${irobot.id}">
+						<spring:message code="irobot.decommission" />
 					</a>
 				</jstl:if>
 			</display:column>
-			<jstl:if test="${irobot.isDecomissioned}">
+			<jstl:if test="${irobot.isDecommissioned}">
 				<display:column>
-					<a id="decomission"
+					<a id="decommission"
 						href="iRobot/action.do?action=delete&iRobotId=${irobot.id}" 
 						onclick="return confirm('<spring:message code="irobot.confirm.delete"/>')">
 						<spring:message code="irobot.delete" />
@@ -138,4 +141,3 @@
 		</display:table>
 	</jstl:otherwise>
 </jstl:choose>
-</security:authorize>

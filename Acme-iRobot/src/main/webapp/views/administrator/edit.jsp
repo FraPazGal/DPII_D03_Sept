@@ -23,36 +23,34 @@
 </script>
 
 <spring:message code="phone.confirmation" var="confirmTelephone" />
-<security:authorize access="hasRole('ADMIN')">
-	<form:form modelAttribute="actorForm" action="administrator/edit.do" onsubmit="javascript: return checkPhone('${confirmTelephone}');">
+<form:form modelAttribute="actorForm" action="administrator/edit.do" onsubmit="javascript: return checkPhone('${confirmTelephone}');">
 
-		<form:hidden path="id" />
-		<form:hidden path="version" />
+	<form:hidden path="id" />
+	<form:hidden path="version" />
 
-		<!-- Actor Attributes -->
-		<h1><spring:message	code="actor.edit.profile" /></h1>
-		<fieldset style="width: 25%">
-			<legend style="font-size: 21px">
-				<spring:message code="actor.personalData" />
-			</legend>
-			<br/>
+	<!-- Actor Attributes -->
+	<h1><spring:message	code="actor.edit.profile" /></h1>
+	<fieldset style="width: 25%">
+		<legend style="font-size: 21px">
+			<spring:message code="actor.personalData" />
+		</legend>
+		<br/>
 
-			<acme:textbox code="actor.name" path="name" size="40px"/><br/>
-			<acme:textbox code="actor.surname" path="surname" size="40px"/><br/>
-			<acme:textbox code="actor.photo" path="photo" size="40px"/><br/>
-			<acme:textbox code="actor.email" path="email" size="40px"/><br/>
-			<acme:textbox code="actor.phone" path="phoneNumber" size="40px"/><br/>
-			<acme:textbox code="actor.address" path="address" size="40px"/><br/>
-		</fieldset>
-		<br /><br />
+		<acme:textbox code="actor.name" path="name" size="40px"/><br/>
+		<acme:textbox code="actor.surname" path="surname" size="40px"/><br/>
+		<acme:textbox code="actor.photo" path="photo" size="40px"/><br/>
+		<acme:textbox code="actor.email" path="email" placeholder="admin.email.placeholder" size="40px"/><br/>
+		<acme:textbox code="actor.phone" path="phoneNumber" size="40px"/><br/>
+		<acme:textbox code="actor.address" path="address" size="40px"/><br/>
+	</fieldset>
+	<br /><br />
 
-		<!-- Buttons -->
-		<acme:submit code="mp.save" name="save" />&nbsp;
-		<acme:cancel url="administrator/display.do" code="mp.cancel" /><br><br>
+	<!-- Buttons -->
+	<acme:submit code="mp.save" name="save" />&nbsp;
+	<acme:cancel url="administrator/display.do" code="mp.cancel" /><br><br>
+	
+	<input type="submit" name="delete"
+		value="<spring:message code="actor.delete"/>"
+		onclick="return confirm('<spring:message code="actor.confirm.delete"/>')" />
 		
-		<input type="submit" name="delete"
-			value="<spring:message code="actor.delete"/>"
-			onclick="return confirm('<spring:message code="actor.confirm.delete"/>')" />
-			
-	</form:form>
-</security:authorize>
+</form:form>

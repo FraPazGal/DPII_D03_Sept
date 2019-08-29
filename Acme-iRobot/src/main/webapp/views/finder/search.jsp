@@ -29,10 +29,9 @@
 	<form:form action="finder/search.do" modelAttribute="finder" id="form">
 
 		<form:hidden path="id" />
-		<acme:textbox code="finder.keyWord" path="keyWord" size="50px" /><br/> <br/>
-		<acme:textbox code="finder.maximumPrice" path="maximumPrice" size="50px" placeholder="price.placeholder"/><br/> <br/>
-		<acme:textbox code="finder.minimumPrice" path="minimumPrice" size="50px" placeholder="price.placeholder"/><br/> <br/>
-		<br>
+		<acme:textbox code="finder.keyWord" path="keyWord" size="50px" /><br/>
+		<acme:textbox code="finder.maximumPrice" path="maximumPrice" size="50px" placeholder="price.placeholder"/><br/>
+		<acme:textbox code="finder.minimumPrice" path="minimumPrice" size="50px" placeholder="price.placeholder"/><br/>
 
 		<input type="submit" name="save" id="save"
 			value="<spring:message code="finder.showResults" />" />
@@ -45,38 +44,36 @@
 
 	</form:form>
 
-	<jstl:if test="${not empty iRobots}">
-		<h2><spring:message code="finder.results" /></h2>
-		<display:table name="iRobots" id="row"
-			requestURI="${requestURI}" pagesize="10" class="displaytag">
+	<h2><spring:message code="finder.results" /></h2>
+	<display:table name="iRobots" id="row"
+		requestURI="finder/search.do" pagesize="5" class="displaytag">
 
-			<!-- Attributes-->
+		<!-- Attributes-->
 
-			<display:column titleKey="irobot.title" sortable="true">
-				<jstl:out value="${row.title}" />
-			</display:column>
-			<display:column titleKey="irobot.ticker" sortable="true">
-				<jstl:out value="${row.ticker}" />
-			</display:column>
-			<display:column titleKey="irobot.price" sortable="true">
-				<jstl:out value="${row.price}" />
-			</display:column>
+		<display:column titleKey="irobot.title" sortable="true">
+			<jstl:out value="${row.title}" />
+		</display:column>
+		<display:column titleKey="irobot.ticker" sortable="true">
+			<jstl:out value="${row.ticker}" />
+		</display:column>
+		<display:column titleKey="irobot.price" sortable="true">
+			<jstl:out value="${row.price}" />
+		</display:column>
 
-			<!-- Action links -->
+		<!-- Action links -->
 
-			<display:column>
-				<a href="iRobot/display.do?iRobotId=${row.id}"> <spring:message
-						code="mp.display" />
-				</a>
-			</display:column>
-			<display:column>
-				<a href="purchase/create.do?iRobotId=${irobot.id}"> <spring:message
-						code="irobot.purchase" />
-				</a>
-			</display:column>
-		
-		</display:table>
-	</jstl:if>
+		<display:column>
+			<a href="iRobot/display.do?iRobotId=${row.id}"> <spring:message
+					code="mp.display" />
+			</a>
+		</display:column>
+		<display:column>
+			<a href="purchase/create.do?iRobotId=${irobot.id}"> <spring:message
+					code="irobot.purchase" />
+			</a>
+		</display:column>
+	
+	</display:table>
 </security:authorize>
 
 <security:authorize access="!hasRole('CUSTOMER')">
@@ -93,32 +90,30 @@
 		<input type="submit" value="Search" name="submit" />
 
 	</form>
-
 	<br>
-	<br>
-	<jstl:if test="${not empty iRobots}">
-		<display:table name="iRobots" id="row"
-			requestURI="finder/list.do" pagesize="10" class="displaytag">
+	<h2><spring:message code="finder.results" /></h2>
+	<display:table name="iRobots" id="row"
+		requestURI="finder/anon/search.do" pagesize="5" class="displaytag">
 
-			<!-- Attributes-->
+		<!-- Attributes-->
 
-			<display:column titleKey="irobot.title" sortable="true">
-				<jstl:out value="${row.title}" />
-			</display:column>
-			<display:column titleKey="irobot.ticker" sortable="true">
-				<jstl:out value="${row.ticker}" />
-			</display:column>
-			<display:column titleKey="irobot.price" sortable="true">
-				<jstl:out value="${row.price}" />
-			</display:column>
+		<display:column titleKey="irobot.title" sortable="true">
+			<jstl:out value="${row.title}" />
+		</display:column>
+		<display:column titleKey="irobot.ticker" sortable="true">
+			<jstl:out value="${row.ticker}" />
+		</display:column>
+		<display:column titleKey="irobot.price" sortable="true">
+			<jstl:out value="${row.price}" />
+		</display:column>
 
-			<!-- Action links -->
+		<!-- Action links -->
 
-			<display:column>
-				<a href="iRobot/display.do?iRobotId=${row.id}"> <spring:message
-						code="mp.display" />
-				</a>
-			</display:column>
-		</display:table>
-	</jstl:if>
+		<display:column>
+			<a href="iRobot/display.do?iRobotId=${row.id}"> <spring:message
+					code="mp.display" />
+			</a>
+		</display:column>
+	</display:table>
+	
 </security:authorize>

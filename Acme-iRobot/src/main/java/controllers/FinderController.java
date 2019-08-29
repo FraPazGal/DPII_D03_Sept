@@ -49,7 +49,7 @@ public class FinderController extends AbstractController {
 			result.addObject("iRobots", finder.getResults());
 			
 		} catch (Throwable oops) {
-			result.addObject("errMsg", oops.getMessage());
+			result = new ModelAndView("redirect:../welcome/index.do");
 		}
 		result.addObject("requestUri", "finder/search.do");
 		return result;
@@ -58,16 +58,14 @@ public class FinderController extends AbstractController {
 	/* Anon search */
 	@RequestMapping(value = "/anon/search", method = RequestMethod.GET)
 	public ModelAndView searchAnon(@RequestParam (required = false) String keyWord) {
-		ModelAndView result;
+		ModelAndView result = new ModelAndView("finder/anon/search");
+		
 		try {
-			result = new ModelAndView("finder/anon/search");
-
 			result.addObject("iRobots", this.finderService.searchAnon(keyWord));
 			result.addObject("requestUri", "finder/anon/search.do");
+			
 		} catch (Throwable oops) {
 			result = new ModelAndView("redirect:../welcome/index.do");
-
-			result.addObject("errMsg", oops.getMessage());
 		}
 		return result;
 		
@@ -77,10 +75,10 @@ public class FinderController extends AbstractController {
 	@RequestMapping(value = "/search", method = RequestMethod.POST, params = "save")
 	public ModelAndView search(final Finder finder, BindingResult binding) {
 		ModelAndView result = new ModelAndView("finder/search");
-		Finder aux;
 		Collection<IRobot> iRobots = new ArrayList<>();
+		
 		try {
-			aux = this.finderService.reconstruct(finder, binding);
+			Finder aux = this.finderService.reconstruct(finder, binding);
 			
 			if (binding.hasErrors()) {
 				result = this.createEditModelAndView(finder);
@@ -89,7 +87,7 @@ public class FinderController extends AbstractController {
 				iRobots = this.finderService.search(aux);
 			}
 		} catch (Throwable oops) {
-			result.addObject("errMsg", oops.getMessage());
+			result = new ModelAndView("redirect:../welcome/index.do");
 		}
 		result.addObject("iRobots", iRobots);
 		
@@ -101,16 +99,14 @@ public class FinderController extends AbstractController {
 		return this.createEditModelAndView(finder, null);
 	}
 
-	protected ModelAndView createEditModelAndView(final Finder finder,
-			final String messageCode) {
-		ModelAndView result;
+	protected ModelAndView createEditModelAndView(final Finder finder, final String messageCode) {
+		ModelAndView result = new ModelAndView("finder/search");
 		final Collection<IRobot> iRobots;
 		iRobots = finder.getResults();
 
-		result = new ModelAndView("finder/search");
 		result.addObject("errMsg", messageCode);
 		result.addObject("finder", finder);
-		result.addObject("conferences", iRobots);
+		result.addObject("iRobots", iRobots);
 
 		return result;
 	}

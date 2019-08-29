@@ -47,7 +47,7 @@ public class AdministratorController extends AbstractController {
 			
 			result.addObject("admin", actor);
 		} catch (final Throwable oops) {
-			result.addObject("errMsg", oops.getMessage());
+			result = new ModelAndView("redirect:../welcome/index.do");
 		}
 		return result;
 	}
@@ -63,7 +63,7 @@ public class AdministratorController extends AbstractController {
 	/* Save Registration */
 	@RequestMapping(value = "/register", method = RequestMethod.POST, params = "save")
 	public ModelAndView register(@Valid ActorRegistrationForm actorRegistrationForm, BindingResult binding) {
-		ModelAndView result = new ModelAndView("redirect:/");
+		ModelAndView result = new ModelAndView("redirect:../welcome/index.do");
 		try {
 			Administrator administrator = this.administratorService.reconstruct(actorRegistrationForm, binding);
 
@@ -81,7 +81,7 @@ public class AdministratorController extends AbstractController {
 	/* Edit */
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView editAdministrator() {
-		ModelAndView result = new ModelAndView("customer/display");;
+		ModelAndView result;
 		try {
 			Actor principal = this.utilityService.findByPrincipal();
 			Assert.isTrue(this.utilityService.checkAuthority(principal, "ADMIN"), "not.allowed");
@@ -89,8 +89,9 @@ public class AdministratorController extends AbstractController {
 			final ActorForm actorForm = new ActorForm(principal);
 			
 			result = this.createEditModelAndView(actorForm);
+			
 		} catch (Throwable oops) {
-			result.addObject("errMsg", oops.getMessage());
+			result = new ModelAndView("redirect:../welcome/index.do");
 		}
 		return result;
 	}
@@ -99,6 +100,7 @@ public class AdministratorController extends AbstractController {
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView edit(ActorForm actorForm, BindingResult binding) {
 		ModelAndView result =  new ModelAndView("redirect:/administrator/display.do");
+		
 		try {
 			Assert.isTrue(this.utilityService.findByPrincipal().getId() == actorForm.getId()
 					&& this.actorService.findOne(this.utilityService.findByPrincipal().getId()) != null, "not.allowed");
@@ -118,20 +120,18 @@ public class AdministratorController extends AbstractController {
 	
 	/* Delete */
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
-	public ModelAndView deleteRookie(final ActorForm actorForm, final BindingResult binding, final HttpSession session) {
+	public ModelAndView delete(final ActorForm actorForm, final BindingResult binding, final HttpSession session) {
 		ModelAndView result = new ModelAndView("redirect:/welcome/index.do");
+		
+		try {
+			Administrator administrator = this.administratorService.findOne(actorForm.getId());
 
-		Administrator administrator = this.administratorService.findOne(actorForm.getId());
-
-		if (binding.hasErrors())
-			result = this.createEditModelAndView(actorForm);
-		else
-			try {
-				this.administratorService.delete(administrator);
-				session.invalidate();
-			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(actorForm, oops.getMessage());
-			}
+			this.administratorService.delete(administrator);
+			session.invalidate();
+			
+		} catch (Throwable oops) {
+			result = this.createEditModelAndView(actorForm, oops.getMessage());
+		}
 		return result;
 	}
 

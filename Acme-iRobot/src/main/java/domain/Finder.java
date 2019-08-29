@@ -32,7 +32,7 @@ public class Finder extends DomainEntity {
 
 	/* Getters and setters */
 
-	@Length(max = 100, message = "The keyword is too long")
+	@Length(max = 100)
 	public String getKeyWord() {
 		return keyWord;
 	}
@@ -41,7 +41,7 @@ public class Finder extends DomainEntity {
 		this.keyWord = keyWord;
 	}
 
-	@Min(value = 0L, message = "The value must be positive")
+	@Min(value = 0L)
 	public Double getMaximumPrice() {
 		return maximumPrice;
 	}
@@ -50,7 +50,7 @@ public class Finder extends DomainEntity {
 		this.maximumPrice = maximumPrice;
 	}
 	
-	@Min(value = 0L, message = "The value must be positive")
+	@Min(value = 0L)
 	public Double getMinimumPrice() {
 		return minimumPrice;
 	}
@@ -69,8 +69,8 @@ public class Finder extends DomainEntity {
 	}
 
 	@Valid
-	@ManyToMany
 	@NotNull
+	@ManyToMany
 	public Collection<IRobot> getResults() {
 		return results;
 	}

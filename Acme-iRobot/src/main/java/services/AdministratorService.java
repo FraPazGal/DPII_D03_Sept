@@ -215,7 +215,7 @@ public class AdministratorService {
 		res.setSurname(form.getSurname());
 		res.setPhoto(form.getPhoto());
 		res.setEmail(form.getEmail());
-		res.setPhoneNumber(form.getPhoneNumber());
+		res.setPhoneNumber(this.utilityService.addCountryCode(form.getPhoneNumber()));
 		res.setAddress(form.getAddress());
 
 		/* Creating user account */
@@ -235,61 +235,59 @@ public class AdministratorService {
 
 		res.setUserAccount(userAccount);
 
-		if(!binding.hasErrors()) {
-			/* Email */
-			if (form.getEmail() != null) {
-				try {
-					Assert.isTrue(this.utilityService.checkEmail(form.getEmail(), "ADMIN"));
-
-				} catch (Throwable oops) {
-					binding.rejectValue("email", "email.error");
-				}
-			}
-			
-			/* Password confirmation */
-			if (form.getPassword() != null) {
-				try {
-					Assert.isTrue(form.getPassword().equals(form.getPasswordConfirmation()));
-				} catch (final Throwable oops) {
-					binding.rejectValue("passwordConfirmation", "password.confirmation.error");
-				}
-			}
-			
-			/* Username */
-			if (form.getUsername() != null) {
-				try {
-					Assert.isTrue(this.utilityService.existsUsername(form.getUsername()));
-				} catch (final Throwable oops) {
-					binding.rejectValue("username", "username.error");
-				}
-			}
-			
-			/* Terms&Conditions */
-			if (form.getTermsAndConditions() != null) {
-				try {
-					Assert.isTrue((form.getTermsAndConditions()));
-				} catch (final Throwable oops) {
-					binding.rejectValue("termsAndConditions", "terms.error");
-				}
-			}
-
-			/* Managing phone number */
-			if (form.getPhoneNumber() != null) {
-				try {
-					final char[] phoneArray = form.getPhoneNumber().toCharArray();
-					if ((!form.getPhoneNumber().equals(null) && !form
-							.getPhoneNumber().equals("")))
-						if (phoneArray[0] != '+'
-								&& Character.isDigit(phoneArray[0])) {
-							final String cc = this.systemConfigurationService
-									.findMySystemConfiguration().getCountryCode();
-							form.setPhoneNumber(cc + " " + form.getPhoneNumber());
-						}
-				} catch (Throwable oops) {
-					binding.rejectValue("phoneNumber", "phone.error");
-				}
+		/* Email */
+		if (!form.getEmail().isEmpty()) {
+			try {
+				Assert.isTrue(this.utilityService.checkEmail(form.getEmail(),"ADMIN"));
+			} catch (Throwable oops) {
+				binding.rejectValue("email", "email.error");
 			}
 		}
+		
+		/* Password confirmation */
+		if (!form.getPassword().isEmpty() && !form.getPasswordConfirmation().isEmpty()) {
+			try {
+				Assert.isTrue(form.getPassword().equals(form.getPasswordConfirmation()));
+			} catch (final Throwable oops) {
+				binding.rejectValue("passwordConfirmation", "password.confirmation.error");
+			}
+		}
+		
+		/* Username */
+		if (form.getUsername() != null) {
+			try {
+				Assert.isTrue(this.utilityService.existsUsername(form.getUsername()));
+			} catch (final Throwable oops) {
+				binding.rejectValue("username", "username.error");
+			}
+		}
+		
+		/* Terms&Conditions */
+		if (form.getTermsAndConditions() != null) {
+			try {
+				Assert.isTrue((form.getTermsAndConditions()));
+			} catch (final Throwable oops) {
+				binding.rejectValue("termsAndConditions", "terms.error");
+			}
+		}
+
+		/* Managing phone number */
+		if (form.getPhoneNumber() != null) {
+			try {
+				final char[] phoneArray = form.getPhoneNumber().toCharArray();
+				if ((!form.getPhoneNumber().equals(null) && !form
+						.getPhoneNumber().equals("")))
+					if (phoneArray[0] != '+'
+							&& Character.isDigit(phoneArray[0])) {
+						final String cc = this.systemConfigurationService
+								.findMySystemConfiguration().getCountryCode();
+						form.setPhoneNumber(cc + " " + form.getPhoneNumber());
+					}
+			} catch (Throwable oops) {
+				binding.rejectValue("phoneNumber", "phone.error");
+			}
+		}
+		
 		return res;
 	}
 
@@ -306,37 +304,34 @@ public class AdministratorService {
 		res.setSurname(actorEditionForm.getSurname());
 		res.setPhoto(actorEditionForm.getPhoto());
 		res.setEmail(actorEditionForm.getEmail());
-		res.setPhoneNumber(actorEditionForm.getPhoneNumber());
+		res.setPhoneNumber(this.utilityService.addCountryCode(actorEditionForm.getPhoneNumber()));
 		res.setAddress(actorEditionForm.getAddress());
 		
 		this.validator.validate(res, binding);
 		
-		if(!binding.hasErrors()) {
-			/* Email */
-			if (actorEditionForm.getEmail() != null) {
-				try {
-					Assert.isTrue(this.utilityService.checkEmail(actorEditionForm.getEmail(), "ADMIN"));
-
-				} catch (Throwable oops) {
-					binding.rejectValue("email", "email.error");
-				}
+		/* Email */
+		if (!actorEditionForm.getEmail().isEmpty()) {
+			try {
+				Assert.isTrue(this.utilityService.checkEmail(actorEditionForm.getEmail(),"ADMIN"));
+			} catch (Throwable oops) {
+				binding.rejectValue("email", "email.error");
 			}
+		}
 
-			/* Managing phone number */
-			if (actorEditionForm.getPhoneNumber() != null) {
-				try {
-					final char[] phoneArray = actorEditionForm.getPhoneNumber().toCharArray();
-					if ((!actorEditionForm.getPhoneNumber().equals(null) && !actorEditionForm
-							.getPhoneNumber().equals("")))
-						if (phoneArray[0] != '+'
-								&& Character.isDigit(phoneArray[0])) {
-							final String cc = this.systemConfigurationService
-									.findMySystemConfiguration().getCountryCode();
-							actorEditionForm.setPhoneNumber(cc + " " + actorEditionForm.getPhoneNumber());
-						}
-				} catch (Throwable oops) {
-					binding.rejectValue("phoneNumber", "phone.error");
-				}
+		/* Managing phone number */
+		if (actorEditionForm.getPhoneNumber() != null) {
+			try {
+				final char[] phoneArray = actorEditionForm.getPhoneNumber().toCharArray();
+				if ((!actorEditionForm.getPhoneNumber().equals(null) && !actorEditionForm
+						.getPhoneNumber().equals("")))
+					if (phoneArray[0] != '+'
+							&& Character.isDigit(phoneArray[0])) {
+						final String cc = this.systemConfigurationService
+								.findMySystemConfiguration().getCountryCode();
+						actorEditionForm.setPhoneNumber(cc + " " + actorEditionForm.getPhoneNumber());
+					}
+			} catch (Throwable oops) {
+				binding.rejectValue("phoneNumber", "phone.error");
 			}
 		}
 

@@ -23,11 +23,11 @@ public class DashboardService {
 	
 	// Other business methods -------------------------------
 	
-	public Double[] StatsIRobotsPerScientist() {
+	public Double[] statsIRobotsPerScientist() {
 		return this.dashboardRepository.statsIRobotsPerScientist();
 	}
 	
-	public List<Scientist> Top10ScientistByPurchases() {
+	public List<Scientist> top10ScientistByPurchases() {
 		List<Scientist> result = new ArrayList<>();
 		
 		result =  this.dashboardRepository.top10ScientistByPurchases();
@@ -39,7 +39,7 @@ public class DashboardService {
 		}
 	}
 	
-	public List<IRobot> Top10BestSellingIRobots() {
+	public List<IRobot> top10BestSellingIRobots() {
 		List<IRobot> result = new ArrayList<>();
 		
 		result =  this.dashboardRepository.top10BestSellingIRobots();
@@ -51,7 +51,7 @@ public class DashboardService {
 		}
 	}
 	
-	public List<IRobot> Top10IRobotByFinders() {
+	public List<IRobot> top10IRobotByFinders() {
 		List<IRobot> result = new ArrayList<>();
 		
 		result =  this.dashboardRepository.top10IRobotByFinders();
@@ -63,7 +63,7 @@ public class DashboardService {
 		}
 	}
 	
-	public List<IRobot> Bottom10IRobotByFinders() {
+	public List<IRobot> bottom10IRobotByFinders() {
 		List<IRobot> result = new ArrayList<>();
 		
 		result =  this.dashboardRepository.bottom10IRobotByFinders();
@@ -75,7 +75,7 @@ public class DashboardService {
 		}
 	}
 	
-	public Double AverageResultsPerFinder() {
+	public Double averageResultsPerFinder() {
 		return this.dashboardRepository.averageResultsPerFinder();
 	}
 	

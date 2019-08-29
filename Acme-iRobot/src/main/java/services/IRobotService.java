@@ -48,7 +48,7 @@ public class IRobotService {
 
 		result = new IRobot();
 		result.setScientist((Scientist) principal);
-		result.setIsDecomissioned(false);
+		result.setIsDecommissioned(false);
 		result.setIsDeleted(false);
 		result.setTicker(this.utilityService.generateTicker((Scientist) principal));
 
@@ -115,7 +115,7 @@ public class IRobotService {
 			result.setId(aux.getId());
 			result.setVersion(aux.getVersion());
 			result.setScientist(aux.getScientist());
-			result.setIsDecomissioned(aux.getIsDecomissioned());
+			result.setIsDecommissioned(aux.getIsDecommissioned());
 			result.setIsDeleted(aux.getIsDeleted());
 		}
 
@@ -132,18 +132,18 @@ public class IRobotService {
 		this.iRobotRepository.flush();
 	}
 	
-	public Collection<IRobot> findIRobotsNotDecomissioned() {
-		return this.iRobotRepository.findIRobotsNotDecomissioned();
+	public Collection<IRobot> findIRobotsNotDecommissioned() {
+		return this.iRobotRepository.findIRobotsNotDecommissioned();
 	}
 
-	public Collection<IRobot> findIRobotsDecomissionedAndMine(Integer scientistId) {
+	public Collection<IRobot> findIRobotsDecommissionedAndMine(Integer scientistId) {
 		this.scientistService.findOne(scientistId);
-		return this.iRobotRepository.findIRobotsDecomissionedAndMine(scientistId);
+		return this.iRobotRepository.findIRobotsDecommissionedAndMine(scientistId);
 	}
 	
-	public Collection<IRobot> findIRobotsNotDecomissionedAndMine(Integer scientistId) {
+	public Collection<IRobot> findIRobotsNotDecommissionedAndMine(Integer scientistId) {
 		this.scientistService.findOne(scientistId);
-		return this.iRobotRepository.findIRobotsNotDecomissionedAndMine(scientistId);
+		return this.iRobotRepository.findIRobotsNotDecommissionedAndMine(scientistId);
 	}
 	
 	public Collection<IRobot> findIRobotsMine(Integer scientistId) {
@@ -160,20 +160,20 @@ public class IRobotService {
 		Actor principal = this.utilityService.findByPrincipal();
 		Assert.isTrue(iRobot.getScientist().equals(principal), "not.allowed");
 		Assert.isTrue(!iRobot.getIsDeleted(), "wrong.irobot.id");
-		Assert.isTrue(iRobot.getIsDecomissioned(), "already.activated");
+		Assert.isTrue(iRobot.getIsDecommissioned(), "already.activated");
 		
-		iRobot.setIsDecomissioned(false);
+		iRobot.setIsDecommissioned(false);
 		
 		this.save(iRobot);
 	}
 	
-	public void decomission(IRobot iRobot) {
+	public void decommission(IRobot iRobot) {
 		Actor principal = this.utilityService.findByPrincipal();
 		Assert.isTrue(iRobot.getScientist().equals(principal), "not.allowed");
 		Assert.isTrue(!iRobot.getIsDeleted(), "wrong.irobot.id");
-		Assert.isTrue(!iRobot.getIsDecomissioned(), "already.decomissioned");
+		Assert.isTrue(!iRobot.getIsDecommissioned(), "already.decommissioned");
 		
-		iRobot.setIsDecomissioned(true);
+		iRobot.setIsDecommissioned(true);
 		
 		this.save(iRobot);
 	}
@@ -182,7 +182,7 @@ public class IRobotService {
 		Actor principal = this.utilityService.findByPrincipal();
 		Assert.isTrue(iRobot.getScientist().equals(principal), "not.allowed");
 		Assert.isTrue(!iRobot.getIsDeleted(), "wrong.irobot.id");
-		Assert.isTrue(iRobot.getIsDecomissioned(), "irobot.not.decomissioned");
+		Assert.isTrue(iRobot.getIsDecommissioned(), "irobot.not.decommissioned");
 		
 		iRobot.setIsDeleted(true);
 		
@@ -193,7 +193,7 @@ public class IRobotService {
 		IRobot result = this.findOne(iRobotId);
 		
 		Assert.isTrue(!result.getIsDeleted(), "wrong.irobot.id");
-		Assert.isTrue(!result.getIsDecomissioned(), "irobot.isDecomissioned.true");
+		Assert.isTrue(!result.getIsDecommissioned(), "irobot.isDecommissioned.true");
 		
 		return result;
 	}

@@ -11,12 +11,12 @@
 <tiles-definitions>
 
 	<definition name="config/display" extends="master.page">
-		<put-attribute name="title" value="Display system configuration" />
+		<put-attribute name="title" value="System configuration" />
 		<put-attribute name="body" value="/views/sytemconfiguration/display.jsp" />
 	</definition>
 
 	<definition name="config/edit" extends="master.page">
-		<put-attribute name="title" value="Edit sysem configuration" />
+		<put-attribute name="title" value="Edit system configuration" />
 		<put-attribute name="body" value="/views/sytemconfiguration/edit.jsp" />
 	</definition>
 

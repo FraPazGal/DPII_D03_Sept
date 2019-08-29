@@ -20,7 +20,6 @@ public class CreditCard {
 
 	/* Getters and setters */
 
-	@NotNull
 	@NotBlank
 	public String getHolder() {
 		return holder;
@@ -30,7 +29,6 @@ public class CreditCard {
 		this.holder = holder;
 	}
 
-	@NotNull
 	@NotBlank
 	public String getMake() {
 		return make;
@@ -40,7 +38,6 @@ public class CreditCard {
 		this.make = make;
 	}
 
-	@NotNull
 	@NotBlank
 	@CreditCardNumber
 	public String getNumber() {

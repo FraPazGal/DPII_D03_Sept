@@ -22,7 +22,7 @@ public class IRobot extends DomainEntity {
 
 	private String title, ticker, description;
 	private Double price;
-	private boolean isDecomissioned, isDeleted;
+	private boolean isDecommissioned, isDeleted;
 	private Scientist scientist;
 
 	/* Getters and setters */
@@ -56,7 +56,7 @@ public class IRobot extends DomainEntity {
 	}
 
 	@NotNull
-	@Min(value = 0L, message = "The value must be positive")
+	@Min(value = 0L)
 	public Double getPrice() {
 		return price;
 	}
@@ -65,12 +65,12 @@ public class IRobot extends DomainEntity {
 		this.price = price;
 	}
 
-	public boolean getIsDecomissioned() {
-		return isDecomissioned;
+	public boolean getIsDecommissioned() {
+		return isDecommissioned;
 	}
 
-	public void setIsDecomissioned(boolean isDecomissioned) {
-		this.isDecomissioned = isDecomissioned;
+	public void setIsDecommissioned(boolean isDecommissioned) {
+		this.isDecommissioned = isDecommissioned;
 	}
 	
 	public boolean getIsDeleted() {

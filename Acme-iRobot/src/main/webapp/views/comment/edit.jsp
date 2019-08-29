@@ -8,17 +8,16 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
+
 <form:form action="comment/edit.do" modelAttribute="comment" id="form">
-<br>
+<h1><spring:message	code="comment.title.create" /><i><jstl:out value="${comment.IRobot.title }"></jstl:out></i></h1>
 <fieldset style="width: 20%">
 	<legend style="font-size: 21px">
 		<spring:message code="comment.legend" />
 	</legend>
 	<br>
 
-
 		<form:hidden path="IRobot" />
-
 		<acme:textbox code="comment.title" path="title" size="113px"/><br>
 		<acme:textarea code="comment.body" path="body" cols="80px" rows="4"/><br>
 		

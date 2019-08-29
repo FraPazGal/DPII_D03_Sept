@@ -39,6 +39,7 @@
 	<form:select path="${path}">
 		<form:options items="${items}"/>
 	</form:select>
+	<br>
 	<form:errors path="${path}" cssClass="error" />
 </div>
 

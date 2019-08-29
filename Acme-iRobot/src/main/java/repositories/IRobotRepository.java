@@ -11,14 +11,14 @@ import domain.IRobot;
 @Repository
 public interface IRobotRepository extends JpaRepository<IRobot, Integer> {
 	
-	@Query("select i from IRobot i where i.isDecomissioned = false and i.isDeleted = false")
-	Collection<IRobot> findIRobotsNotDecomissioned();
+	@Query("select i from IRobot i where i.isDecommissioned = false and i.isDeleted = false")
+	Collection<IRobot> findIRobotsNotDecommissioned();
 	
-	@Query("select i from IRobot i where i.isDecomissioned = true and i.isDeleted = false and i.scientist.id = ?1")
-	Collection<IRobot> findIRobotsDecomissionedAndMine(Integer scientistId);
+	@Query("select i from IRobot i where i.isDecommissioned = true and i.isDeleted = false and i.scientist.id = ?1")
+	Collection<IRobot> findIRobotsDecommissionedAndMine(Integer scientistId);
 	
-	@Query("select i from IRobot i where i.isDecomissioned = false and i.isDeleted = false and i.scientist.id = ?1")
-	Collection<IRobot> findIRobotsNotDecomissionedAndMine(Integer scientistId);
+	@Query("select i from IRobot i where i.isDecommissioned = false and i.isDeleted = false and i.scientist.id = ?1")
+	Collection<IRobot> findIRobotsNotDecommissionedAndMine(Integer scientistId);
 	
 	@Query("select i from IRobot i where i.scientist.id = ?1")
 	Collection<IRobot> findIRobotsMine(Integer scientistId);

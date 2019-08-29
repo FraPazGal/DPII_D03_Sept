@@ -58,8 +58,8 @@ public class Purchase extends DomainEntity {
 		this.creditCard = creditCard;
 	}
 
-	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	@NotNull
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getPurchaseMoment() {
 		return purchaseMoment;
 	}
@@ -69,7 +69,7 @@ public class Purchase extends DomainEntity {
 	}
 	
 	@NotNull
-	@Min(value = 0L, message = "The value must be positive")
+	@Min(value = 0L)
 	public Double getPrice() {
 		return price;
 	}

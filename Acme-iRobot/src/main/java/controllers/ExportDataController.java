@@ -146,6 +146,8 @@ public class ExportDataController extends AbstractController {
 			+ purchase.getCreditCard().getExpirationMonth() + "/"
 			+ purchase.getCreditCard().getExpirationYear() + "\r\n" + "CVV:"
 			+ purchase.getCreditCard().getCVV();
+			
+			res += "\r\n\r\n";
 			res += "-----------";
 			res += "\r\n\r\n";
 		}
@@ -162,7 +164,9 @@ public class ExportDataController extends AbstractController {
 			res += "Published Date: " + comment.getPublishedDate()+ "\r\n\r\n";
 			res += "Title: " + comment.getTitle()+ "\r\n\r\n";
 			res += "Body: " + comment.getBody()+ "\r\n\r\n";
-			res += "iRobot: " + comment.getIRobot().getTitle()+ "\r\n\r\n";
+			res += "iRobot: " + comment.getIRobot().getTitle();
+			
+			res += "\r\n\r\n";
 			res += "-----------";
 			res += "\r\n\r\n";
 		}
@@ -219,7 +223,7 @@ public class ExportDataController extends AbstractController {
 			res += "Ticker: " + iRobot.getTicker()+ "\r\n\r\n";
 			res += "Description: " + iRobot.getDescription()+ "\r\n\r\n";
 			res += "Price: " + iRobot.getPrice()+ "\r\n\r\n";
-			res += "Decomissioned: " + iRobot.getIsDecomissioned()+ "\r\n\r\n";
+			res += "Decommissioned: " + iRobot.getIsDecommissioned()+ "\r\n\r\n";
 			res += "Deleted: " + iRobot.getIsDeleted()+ "\r\n\r\n";
 			res += "-----------";
 			res += "\r\n\r\n";

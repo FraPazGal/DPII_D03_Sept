@@ -51,13 +51,13 @@
 			<acme:textbox code="actor.name" path="name" size="40px"/><br/>
 			<acme:textbox code="actor.surname" path="surname" size="40px"/><br/>
 			<acme:textbox code="actor.photo" path="photo" size="40px"/><br/>
-			<acme:textbox code="actor.email" path="email" size="40px"/><br/>
+			<acme:textbox code="actor.email" path="email" placeholder="user.email.placeholder" size="40px"/><br/>
 			<acme:textbox code="actor.phone" path="phoneNumber" size="40px"/><br/>
 			<acme:textbox code="actor.address" path="address" size="40px"/><br/>
-			<acme:textbox code="actor.VATNumber" path="VATNumber" size="40px"/><br/>
+			<acme:textbox code="actor.VATNumber" path="VATNumber" placeholder="VATNumber.placeholder" size="40px"/><br/>
 
 		</fieldset>
-		<br /><br>
+		<br>
 		
 		<fieldset style="width: 25%">
 			<legend style="font-size: 21px">

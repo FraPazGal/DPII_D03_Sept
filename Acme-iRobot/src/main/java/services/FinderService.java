@@ -148,7 +148,7 @@ public class FinderService {
 		if ((finder.getKeyWord() == null || finder.getKeyWord().isEmpty())
 				&& finder.getMaximumPrice() == null
 				&& finder.getMinimumPrice() == null) {
-			results = this.allIRobotsNotDecomissioned();
+			results = this.allIRobotsNotDecommissioned();
 			
 		} else {
 			results = this.search(keyWord, maximumPrice, minimumPrice);
@@ -196,8 +196,8 @@ public class FinderService {
 		return finder;
 	}
 
-	private Collection<IRobot> allIRobotsNotDecomissioned() {
-		return this.finderRepository.allIRobotsNotDecomissioned();
+	private Collection<IRobot> allIRobotsNotDecommissioned() {
+		return this.finderRepository.allIRobotsNotDecommissioned();
 	}
 	
 	public Finder findFinderByCustomerId(int customerId) {

@@ -23,55 +23,53 @@
 </script>
 
 <spring:message code="phone.confirmation" var="confirmTelephone" />
-<security:authorize access="hasRole('SCIENTIST')">
-	<form:form modelAttribute="userForm" action="scientist/edit.do"
-		onsubmit="javascript: return checkPhone('${confirmTelephone}');">
+<form:form modelAttribute="userForm" action="scientist/edit.do"
+	onsubmit="javascript: return checkPhone('${confirmTelephone}');">
 
-		<form:hidden path="id" />
-		<form:hidden path="version" />
+	<form:hidden path="id" />
+	<form:hidden path="version" />
 
-		<!-- Actor Attributes -->
-		<h1><spring:message	code="actor.edit.profile" /></h1>
-		<fieldset style="width: 25%">
-			<legend style="font-size: 21px">
-				<spring:message code="actor.personalData" />
-			</legend>
-			<br/>
+	<!-- Actor Attributes -->
+	<h1><spring:message	code="actor.edit.profile" /></h1>
+	<fieldset style="width: 25%">
+		<legend style="font-size: 21px">
+			<spring:message code="actor.personalData" />
+		</legend>
+		<br/>
 
-			<acme:textbox code="actor.name" path="name" size="40px"/><br/>
-			<acme:textbox code="actor.surname" path="surname" size="40px"/><br/>
-			<acme:textbox code="actor.photo" path="photo" size="40px"/><br/>
-			<acme:textbox code="actor.email" path="email" size="40px"/><br/>
-			<acme:textbox code="actor.phone" path="phoneNumber" size="40px"/><br/>
-			<acme:textbox code="actor.address" path="address" size="40px"/><br/>
-			<acme:textbox code="actor.VATNumber" path="VATNumber" size="40px"/><br/>
+		<acme:textbox code="actor.name" path="name" size="40px"/><br/>
+		<acme:textbox code="actor.surname" path="surname" size="40px"/><br/>
+		<acme:textbox code="actor.photo" path="photo" size="40px"/><br/>
+		<acme:textbox code="actor.email" path="email" placeholder="user.email.placeholder" size="40px"/><br/>
+		<acme:textbox code="actor.phone" path="phoneNumber" size="40px"/><br/>
+		<acme:textbox code="actor.address" path="address" size="40px"/><br/>
+		<acme:textbox code="actor.VATNumber" path="VATNumber" placeholder="VATNumber.placeholder" size="40px"/><br/>
 
-		</fieldset>
-		<br /><br>
+	</fieldset>
+	<br>
+	
+	<fieldset style="width: 25%">
+		<legend style="font-size: 21px">
+			<spring:message code="mp.cc.creditCard" />
+		</legend>
+		<br/>
 		
-		<fieldset style="width: 25%">
-			<legend style="font-size: 21px">
-				<spring:message code="mp.cc.creditCard" />
-			</legend>
-			<br/>
-			
-			<acme:textbox code="mp.cc.holder" path="holder" size="40px"/><br/>
-			<acme:selectString items="${makers}" code="mp.cc.make" path="make"/><br/>
-			<acme:textbox code="mp.cc.number" path="number" placeholder="ccnumber.placeholder" size="40px"/><br/>
-			<acme:textbox code="mp.cc.expirationMonth" path="expirationMonth" placeholder="expirationMonth.placeholder" size="5px"/><br/>
-			<acme:textbox code="mp.cc.expirationYear" path="expirationYear" placeholder="expirationMonth.placeholder" size="5px"/><br/>
-			<acme:textbox code="mp.cc.CVV" path="CVV" placeholder="cvv.placeholder" size="5px"/><br/>
-			
-		</fieldset>
-		<br>
+		<acme:textbox code="mp.cc.holder" path="holder" size="40px"/><br/>
+		<acme:selectString items="${makers}" code="mp.cc.make" path="make"/><br/>
+		<acme:textbox code="mp.cc.number" path="number" placeholder="ccnumber.placeholder" size="40px"/><br/>
+		<acme:textbox code="mp.cc.expirationMonth" path="expirationMonth" placeholder="expirationMonth.placeholder" size="5px"/><br/>
+		<acme:textbox code="mp.cc.expirationYear" path="expirationYear" placeholder="expirationMonth.placeholder" size="5px"/><br/>
+		<acme:textbox code="mp.cc.CVV" path="CVV" placeholder="cvv.placeholder" size="5px"/><br/>
 		
-		<!-- Buttons -->
-		<acme:submit code="mp.save" name="save" />&nbsp;
-		<acme:cancel url="scientist/display.do" code="mp.cancel" /><br><br>
-		
-		<input type="submit" name="delete"
-			value="<spring:message code="actor.delete"/>"
-			onclick="return confirm('<spring:message code="actor.confirm.delete"/>')" />
+	</fieldset>
+	<br>
+	
+	<!-- Buttons -->
+	<acme:submit code="mp.save" name="save" />&nbsp;
+	<acme:cancel url="scientist/display.do" code="mp.cancel" /><br><br>
+	
+	<input type="submit" name="delete"
+		value="<spring:message code="actor.delete"/>"
+		onclick="return confirm('<spring:message code="actor.confirm.delete"/>')" />
 
-	</form:form>
-</security:authorize>
+</form:form>

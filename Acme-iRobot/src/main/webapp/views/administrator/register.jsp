@@ -53,7 +53,7 @@
 			<acme:textbox code="actor.name" path="name" size="40px"/><br/>
 			<acme:textbox code="actor.surname" path="surname" size="40px"/><br/>
 			<acme:textbox code="actor.photo" path="photo" size="40px"/><br/>
-			<acme:textbox code="actor.email" path="email" size="40px"/><br/>
+			<acme:textbox code="actor.email" path="email" placeholder="admin.email.placeholder" size="40px"/><br/>
 			<acme:textbox code="actor.phone" path="phoneNumber" size="40px"/><br/>
 			<acme:textbox code="actor.address" path="address" size="40px"/><br/>
 		</fieldset>

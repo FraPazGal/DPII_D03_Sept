@@ -56,7 +56,7 @@ public class PurchaseController extends AbstractController {
 			result.addObject("purchase", purchase);
 			
 		} catch (final Throwable oops) {
-			result.addObject("errMsg", oops.getMessage());
+			result = new ModelAndView("redirect:../welcome/index.do");
 		}
 		return result;
 	}
@@ -73,11 +73,13 @@ public class PurchaseController extends AbstractController {
 				purchases = this.purchaseService.purchasesPerCustomer(principal.getId());
 			} else if (this.utilityService.checkAuthority(principal, "SCIENTIST") && iRobotId != null) {
 				purchases = this.purchaseService.purchasesPerIRobot(iRobotId);
+			} else {
+				Assert.notEmpty(purchases);
 			}
 			result.addObject("purchases", purchases);
 
 		} catch (final Throwable oops) {
-			result.addObject("errMsg", oops.getMessage());
+			result = new ModelAndView("redirect:../welcome/index.do");
 		}
 		return result;
 	}
@@ -85,14 +87,14 @@ public class PurchaseController extends AbstractController {
 	/* Create */
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView createPurchase(@RequestParam final int iRobotId, @RequestParam (required = false) final String CC) {
-		ModelAndView result = new ModelAndView("purchase/list");
+		ModelAndView result;
 		boolean visible = false;
 		
 		try {
 			PurchaseForm purchaseForm = new PurchaseForm();
 			IRobot iRobot = this.iRobotService.findOne(iRobotId);
 			
-			Assert.isTrue(!iRobot.getIsDeleted() && !iRobot.getIsDecomissioned(), "wrong.irobot.id");
+			Assert.isTrue(!iRobot.getIsDeleted() && !iRobot.getIsDecommissioned(), "wrong.irobot.id");
 			purchaseForm.setIRobot(iRobot);
 
 			result = this.createEditModelAndView(purchaseForm);
@@ -103,7 +105,7 @@ public class PurchaseController extends AbstractController {
 			result.addObject("visible", visible);
 			
 		} catch (Throwable oops) {
-			result.addObject("errMsg", oops.getMessage());
+			result = new ModelAndView("redirect:../welcome/index.do");
 		}
 		return result;
 	}
@@ -111,7 +113,7 @@ public class PurchaseController extends AbstractController {
 	/* Edit */
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam final int purchaseId) {
-		ModelAndView result = new ModelAndView("purchase/list");
+		ModelAndView result;
 		
 		try {
 			Actor principal = this.utilityService.findByPrincipal();
@@ -123,7 +125,7 @@ public class PurchaseController extends AbstractController {
 			result = this.createEditModelAndView(editPurchaseFormObject);
 			
 		} catch (final Throwable oops) {
-			result.addObject("errMsg", oops.getMessage());
+			result = new ModelAndView("redirect:../welcome/index.do");
 		}
 		return result;
 	}
@@ -173,12 +175,12 @@ public class PurchaseController extends AbstractController {
 	/* Redirect to create with new CC */
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "otherCC")
 	public ModelAndView editOtherCC(PurchaseForm purchaseForm, BindingResult binding) {
-		ModelAndView result = new ModelAndView("purchase/list");
+		ModelAndView result;
 
 		try {
 			result = new ModelAndView("redirect:/purchase/create.do?iRobotId=" + purchaseForm.getIRobot().getId() + "&CC=new");
 		} catch (final Throwable oops) {
-			result.addObject("errMsg", oops.getMessage());
+			result = new ModelAndView("redirect:../welcome/index.do");
 		}
 		return result;
 	}
@@ -197,7 +199,7 @@ public class PurchaseController extends AbstractController {
 			String[] aux = this.systemConfigurationService.findMySystemConfiguration().getMakers().split(",");
 			result.addObject("makers", Arrays.asList(aux));
 		} catch (Throwable oops) {
-			result.addObject("errMsg", oops.getMessage());
+			result = new ModelAndView("redirect:../welcome/index.do");
 		}
 		result.addObject("errMsg", messageCode);
 		

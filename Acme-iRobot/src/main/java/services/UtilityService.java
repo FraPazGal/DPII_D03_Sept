@@ -33,6 +33,9 @@ public class UtilityService {
 	@Autowired
 	private IRobotService iRobotService;	
 	
+	@Autowired
+	private SystemConfigurationService systemConfigurationService;	
+	
 	// Other business methods -------------------------------
 
 	public Boolean checkEmail(final String email, final String authority) {
@@ -130,5 +133,28 @@ public class UtilityService {
 	
 	private boolean checkForUniqueTicket(String ticker) {
 		return this.iRobotService.uniqueTicket(ticker);
+	}
+	
+	public boolean isValidCCMake (String toValidate) {
+		boolean isValid = false;
+		String[] aux = this.systemConfigurationService.findMySystemConfiguration().getMakers().split(",");
+		for(String validMake : aux) {
+			if(toValidate.contentEquals(validMake)) {
+				isValid = true;
+				break;
+			}
+		}
+		return isValid;
+	}
+	
+	public String addCountryCode (String phoneNumber) {
+		String result = phoneNumber;
+		final Pattern patternPN = Pattern.compile("(^(([0-9]{4}){1}([0-9]{0,}))$)");
+		final Matcher matcher = patternPN.matcher(phoneNumber);
+		if(matcher.matches()) {
+			String countryCode = this.systemConfigurationService.findMySystemConfiguration().getCountryCode();
+			result = countryCode + " " + result;
+		}
+		return result;
 	}
 }
