@@ -10,6 +10,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 
+<h1><spring:message	code="sysconfig.title" /></h1>
 <table class="displayStyle">
 
 	<tr>

@@ -164,22 +164,15 @@ public class IRobotController extends AbstractController {
 	/* Save */
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(IRobot IRobot, BindingResult binding) {
-		ModelAndView result = new ModelAndView("iRobot/edit");
+		ModelAndView result = new ModelAndView("redirect:list.do?range=mineND");
 
 		try {
 			IRobot toSave = this.iRobotService.reconstruct(IRobot, binding);
 			if (binding.hasErrors()) {
-
-				result.addObject("IRobot", IRobot);
-			} else
-				try {
-					this.iRobotService.save(toSave);
-					result = new ModelAndView("redirect:list.do?range=mineND");
-
-				} catch (final Throwable oops) {
-					result.addObject("IRobot", toSave);
-					result.addObject("errMsg", oops.getMessage());
-				}
+				result = this.createEditModelAndView(IRobot);
+			} else {
+				this.iRobotService.save(toSave);
+			}
 		} catch (final Throwable oops) {
 			result = this.createEditModelAndView(IRobot, oops.getMessage());
 		}
