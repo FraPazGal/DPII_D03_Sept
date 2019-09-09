@@ -16,7 +16,9 @@ import repositories.ScientistRepository;
 import security.Authority;
 import security.UserAccount;
 import domain.Actor;
+import domain.Comment;
 import domain.CreditCard;
+import domain.IRobot;
 import domain.Scientist;
 import forms.UserForm;
 import forms.UserRegistrationForm;
@@ -46,7 +48,7 @@ public class ScientistService {
 	
 	@Autowired
 	private IRobotService iRobotService;
-
+	
 	// CRUD Methods ------------------------------------------
 
 	public Scientist create() {
@@ -124,7 +126,7 @@ public class ScientistService {
 		res.setPhoneNumber(this.utilityService.addCountryCode(form.getPhoneNumber()));
 		res.setAddress(form.getAddress());
 		res.setVATNumber(form.getVATNumber());
-
+		
 		/* Creating user account */
 		final UserAccount userAccount = new UserAccount();
 
@@ -321,6 +323,69 @@ public class ScientistService {
 
 	public void flush() {
 		this.scientistRepository.flush();
+	}
+	
+	public String exportData() {
+		Scientist scientist = (Scientist) this.utilityService.findByPrincipal();
+		Assert.isTrue(this.utilityService.checkAuthority(scientist, "SCIENTIST"), "not.allowed");
+		
+		String res;
+	
+		res = "Data of your user account:";
+		res += "\r\n\r\n";
+		res += "Name: " + scientist.getName() + " \r\n" + "Surname: "
+				+ scientist.getSurname() + " \r\n" + "VAT:" + scientist.getVATNumber()
+				+ " \r\n" + "Photo: " + scientist.getPhoto() + " \r\n" + "Email: "
+				+ scientist.getEmail() + " \r\n" + "Phone Number: "
+				+ scientist.getPhoneNumber() + " \r\n" + "Address: "
+				+ scientist.getAddress() + " \r\n" + " \r\n" + "\r\n"
+				
+				+ "Credit Card:" + "\r\n" + "Holder:"
+				+ scientist.getCreditCard().getHolder() + "\r\n" +
+				"Make:" + scientist.getCreditCard().getMake() + "\r\n" + "Number:"
+				+ scientist.getCreditCard().getNumber() + "\r\n"
+				+ "Date expiration:"
+				+ scientist.getCreditCard().getExpirationMonth() + "/"
+				+ scientist.getCreditCard().getExpirationYear() + "\r\n" + "CVV:"
+				+ scientist.getCreditCard().getCVV();
+		
+		res += "\r\n\r\n";
+		res += "----------------------------------------";
+		res += "\r\n\r\n";
+
+		res += "iRobots:";
+		res += "\r\n\r\n";
+		Collection<IRobot> iRobots = this.iRobotService.findIRobotsMine(scientist.getId());
+		for (IRobot iRobot : iRobots) {
+			res += "iRobot: " + "\r\n\r\n";
+			res += "Title: " + iRobot.getTitle()+ "\r\n\r\n";
+			res += "Ticker: " + iRobot.getTicker()+ "\r\n\r\n";
+			res += "Description: " + iRobot.getDescription()+ "\r\n\r\n";
+			res += "Price: " + iRobot.getPrice()+ "\r\n\r\n";
+			res += "Decommissioned: " + iRobot.getIsDecommissioned()+ "\r\n\r\n";
+			res += "Deleted: " + iRobot.getIsDeleted()+ "\r\n\r\n";
+			res += "-----------";
+			res += "\r\n\r\n";
+		}
+		
+		res += "\r\n\r\n";
+		res += "----------------------------------------";
+		res += "\r\n\r\n";
+		
+		res += "Comments:";
+		res += "\r\n\r\n";
+		Collection<Comment> comments = this.commentService.findCommentByActorId(scientist.getId());
+		for (Comment comment : comments) {
+			res += "Comment: " + "\r\n\r\n";
+			res += "Published Date: " + comment.getPublishedDate()+ "\r\n\r\n";
+			res += "Title: " + comment.getTitle()+ "\r\n\r\n";
+			res += "Body: " + comment.getBody()+ "\r\n\r\n";
+			res += "iRobot: " + comment.getIRobot().getTitle()+ "\r\n\r\n";
+			res += "-----------";
+			res += "\r\n\r\n";
+		}
+		
+		return res;
 	}
 
 }

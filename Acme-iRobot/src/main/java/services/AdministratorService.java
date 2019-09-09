@@ -103,13 +103,13 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
 
 import repositories.AdministratorRepository;
 import security.Authority;
 import security.UserAccount;
 import domain.Actor;
 import domain.Administrator;
+import domain.Comment;
 import forms.ActorForm;
 import forms.ActorRegistrationForm;
 
@@ -132,9 +132,6 @@ public class AdministratorService {
 	
 	@Autowired
 	private CommentService commentService;
-
-	@Autowired
-	private Validator validator;
 
 	// CRUD Methods ------------------------------------------
 
@@ -179,8 +176,7 @@ public class AdministratorService {
 
 		if (administrator.getId() == 0) {
 
-			Assert.isTrue(
-					this.utilityService.checkAuthority(principal, "ADMIN"), "not.allowed");
+			Assert.isTrue(this.utilityService.checkAuthority(principal, "ADMIN"), "not.allowed");
 
 			res = this.administratorRepository.save(administrator);
 
@@ -199,6 +195,7 @@ public class AdministratorService {
 		
 		Assert.notNull(administrator, "not.allowed");
 		Assert.isTrue(principal.getId() == administrator.getId(), "not.allowed");
+		Assert.isTrue(this.utilityService.checkAuthority(principal, "ADMIN"), "not.allowed");
 
 		this.commentService.deleteComments(administrator.getId());
 		this.administratorRepository.delete(administrator);
@@ -207,7 +204,10 @@ public class AdministratorService {
 	// Other business methods -------------------------------
 	
 	public Administrator reconstruct(ActorRegistrationForm form, BindingResult binding) {
-
+		
+		Actor principal = this.utilityService.findByPrincipal();
+		Assert.isTrue(this.utilityService.checkAuthority(principal, "ADMIN"), "not.allowed");
+		
 		/* Creating admin */
 		Administrator res = this.create();
 
@@ -297,6 +297,7 @@ public class AdministratorService {
 		Administrator res = this.create();
 		Actor principal = this.utilityService.findByPrincipal();
 		Assert.isTrue(principal.getId() == actorEditionForm.getId(), "not.allowed");
+		Assert.isTrue(this.utilityService.checkAuthority(principal, "ADMIN"), "not.allowed");
 
 		res.setId(actorEditionForm.getId());
 		res.setVersion(actorEditionForm.getVersion());
@@ -306,8 +307,6 @@ public class AdministratorService {
 		res.setEmail(actorEditionForm.getEmail());
 		res.setPhoneNumber(this.utilityService.addCountryCode(actorEditionForm.getPhoneNumber()));
 		res.setAddress(actorEditionForm.getAddress());
-		
-		this.validator.validate(res, binding);
 		
 		/* Email */
 		if (!actorEditionForm.getEmail().isEmpty()) {
@@ -344,6 +343,44 @@ public class AdministratorService {
 
 	public void flush() {
 		this.administratorRepository.flush();
+	}
+	
+	public String exportData() {
+		Actor principal = this.utilityService.findByPrincipal();
+		Assert.isTrue(this.utilityService.checkAuthority(principal, "ADMIN"), "not.allowed");
+		
+		String res;
+		
+		res = "Data of your user account:";
+		res += "\r\n\r\n";
+		res += "Name: " + principal.getName() + " \r\n" + "Surname: "
+				+ principal.getSurname() + " \r\n" 
+				+ " \r\n" + "Photo: " + principal.getPhoto() + " \r\n" + "Email: "
+				+ principal.getEmail() + " \r\n" + "Phone Number: "
+				+ principal.getPhoneNumber() + " \r\n" + "Address: "
+				+ principal.getAddress() + " \r\n" + " \r\n" + "\r\n";
+		
+		res += "\r\n\r\n";
+		res += "----------------------------------------";
+		res += "\r\n\r\n";
+		
+		res += "Comments:";
+		res += "\r\n\r\n";
+		Collection<Comment> comments = this.commentService.findCommentByActorId(principal.getId());
+		for (Comment comment : comments) {
+			res += "Comment: " + "\r\n\r\n";
+			res += "Published Date: " + comment.getPublishedDate()+ "\r\n\r\n";
+			res += "Title: " + comment.getTitle()+ "\r\n\r\n";
+			res += "Body: " + comment.getBody()+ "\r\n\r\n";
+			res += "iRobot: " + comment.getIRobot().getTitle()+ "\r\n\r\n";
+			res += "-----------";
+			res += "\r\n\r\n";
+		}
+		
+		res += "\r\n\r\n";
+		res += "----------------------------------------";
+		
+		return res;
 	}
 
 }

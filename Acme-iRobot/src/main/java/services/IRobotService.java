@@ -104,7 +104,7 @@ public class IRobotService {
 	public IRobot reconstruct(final IRobot iRobot,BindingResult binding) {
 		IRobot result, aux = null;
 		Actor principal = this.utilityService.findByPrincipal();
-
+		
 		result = this.create();
 
 		if (iRobot.getId() != 0) {

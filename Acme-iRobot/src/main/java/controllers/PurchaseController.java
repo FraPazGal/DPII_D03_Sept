@@ -48,12 +48,7 @@ public class PurchaseController extends AbstractController {
 		ModelAndView result = new ModelAndView("purchase/display");
 
 		try {
-			Purchase purchase = this.purchaseService.findOne(purchaseId);
-			Actor principal = this.utilityService.findByPrincipal();
-			
-			Assert.isTrue(purchase.getCustomer().equals((Customer) principal), "not.allowed");
-			
-			result.addObject("purchase", purchase);
+			result.addObject("purchase", this.purchaseService.findOneAsCustomer(purchaseId));
 			
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:../welcome/index.do");

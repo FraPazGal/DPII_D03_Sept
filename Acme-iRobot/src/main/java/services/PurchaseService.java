@@ -179,4 +179,13 @@ public class PurchaseService {
 			this.purchaseRepository.save(purchase);
 		}
 	}
+	
+	public Purchase findOneAsCustomer(Integer purchaseId) {
+		Purchase result = this.findOne(purchaseId);
+		Actor principal = this.utilityService.findByPrincipal();
+		
+		Assert.isTrue(result.getCustomer().equals((Customer) principal), "not.allowed");
+		
+		return result;
+	}
 }
