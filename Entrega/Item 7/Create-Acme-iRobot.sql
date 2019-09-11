@@ -1,5 +1,7 @@
 ﻿start transaction;
 
+drop database if exists `Acme-iRobot`;
+
 create database `Acme-iRobot`;
 
 use `Acme-iRobot`;
@@ -352,7 +354,7 @@ CREATE TABLE `system_configuration` (
 
 LOCK TABLES `system_configuration` WRITE;
 /*!40000 ALTER TABLE `system_configuration` DISABLE KEYS */;
-INSERT INTO `system_configuration` VALUES (6,0,'https://i.ibb.co/6Bpvwck/acme-irobot.png','+034','VISA,MASTERCARD,DINNERS,AMEX',10,'Acme-iRobot',5);
+INSERT INTO `system_configuration` VALUES (6,0,'https://i.ibb.co/6Bpvwck/acme-irobot.png','+034','VISA,MASTERCARD,DINNERS,AMEX',10,'Acme-iRobot',1);
 /*!40000 ALTER TABLE `system_configuration` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -508,6 +510,6 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-09-10  3:46:05
+-- Dump completed on 2019-09-11 13:58:19
 
 commit;
