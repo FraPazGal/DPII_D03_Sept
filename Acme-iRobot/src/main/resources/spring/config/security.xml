@@ -41,7 +41,7 @@
 		<security:intercept-url pattern="/welcome/index.do"
 			access="permitAll" />
 		<security:intercept-url pattern="/terms.do"
-			access="isAuthenticated()" />
+			access="permitAll" />
 			
 		<security:intercept-url pattern="/iRobot/list.do"
 			access="permitAll" />
