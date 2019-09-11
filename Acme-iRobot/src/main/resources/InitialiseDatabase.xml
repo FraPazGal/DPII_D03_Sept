@@ -58,7 +58,7 @@
 					value="¡Bienvenidos a Acme iRobot! ¡Bienvenidos a una nueva era de la computación!" />
 			</util:map>
 		</property>
-		<property name="timeResultsCached" value="5" />
+		<property name="timeResultsCached" value="1" />
 		<property name="maxResults" value="10" />
 	</bean>
 

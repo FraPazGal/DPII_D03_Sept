@@ -109,7 +109,7 @@ public class ActorRegistrationForm {
 	}
 
 	@NotBlank
-	@NotNull
+	@Size(min = 5, max = 32)
 	public String getPassword() {
 		return password;
 	}
