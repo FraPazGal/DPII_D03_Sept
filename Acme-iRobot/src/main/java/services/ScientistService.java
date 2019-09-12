@@ -245,8 +245,11 @@ public class ScientistService {
 		Actor principal = this.utilityService.findByPrincipal();
 		Assert.isTrue(principal.getId() == form.getId(), "not.allowed");
 		
-		res.setId(form.getId());
-		res.setVersion(form.getVersion());
+		Scientist aux = this.findOne(form.getId());
+		
+		res.setId(aux.getId());
+		res.setVersion(aux.getVersion());
+		
 		res.setName(form.getName());
 		res.setSurname(form.getSurname());
 		res.setPhoto(form.getPhoto());

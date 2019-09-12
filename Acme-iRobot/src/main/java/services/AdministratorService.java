@@ -299,8 +299,11 @@ public class AdministratorService {
 		Assert.isTrue(principal.getId() == actorEditionForm.getId(), "not.allowed");
 		Assert.isTrue(this.utilityService.checkAuthority(principal, "ADMIN"), "not.allowed");
 
-		res.setId(actorEditionForm.getId());
-		res.setVersion(actorEditionForm.getVersion());
+		Administrator aux = this.findOne(actorEditionForm.getId());
+		
+		res.setId(aux.getId());
+		res.setVersion(aux.getVersion());
+		
 		res.setName(actorEditionForm.getName());
 		res.setSurname(actorEditionForm.getSurname());
 		res.setPhoto(actorEditionForm.getPhoto());
